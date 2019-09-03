@@ -1,0 +1,144 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.tooltip.bottom .tooltip-inner {
+    max-width: 310px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: center;
+    background-color: #245973;
+    border-radius: 5px
+}
+
+input {
+    border: 2px solid black;
+    padding: 3px;
+}
+
+    input:placeholder-shown {
+        border-color: silver;
+    }
+
+
+a:hover, a:focus {
+    outline: none;
+    text-decoration: none;
+}
+
+/* Tabs http://bestjquery.com/tutorial/tab/demo37/
+-------------------------------------------------- */
+.tab {
+    background: #dee6ed;
+    border: 1px solid #6f66a5;
+}
+
+    .tab .nav-tabs {
+        background: #517394;
+        border-bottom: none;
+        padding: 10px 15px 0;
+    }
+
+        .tab .nav-tabs li {
+            margin: 0;
+        }
+
+            .tab .nav-tabs li a {
+                display: block;
+                padding: 20px;
+                font-size: 15px;
+                font-weight: 700;
+                color: #404040;
+                background: #6b8cae;
+                margin: 0;
+                border-radius: 0;
+                border: none;
+                text-transform: uppercase;
+                transition: all 0.5s ease 0s;
+            }
+
+                .tab .nav-tabs li a:hover {
+                    background: #a5bccf;
+                    color: #2c3e50;
+                    border: none;
+                }
+
+                .tab .nav-tabs li a.active {
+                    background: #dee6ed;
+                    color: #2c3e50;
+                    border: none;
+                }
+
+    .tab .tab-content {
+        font-size: 15px;
+        color: #2c3e50;
+        line-height: 25px;
+        padding: 20px;
+    }
+
+        .tab .tab-content h3 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+@media only screen and (max-width: 480px) {
+    .tab .nav-tabs li {
+        width: 100%;
+    }
+}

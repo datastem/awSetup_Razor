@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AppointmentWave Setup</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/simple-sidebar/css/simple-sidebar.css">
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".triple-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse w-100 order-1 triple-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="navbar-brand" asp-page="./Customers/CustomerIndex">AppointmentWave Setup</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-2 triple-collapse">
+                <ul class="navbar-nav mx-auto">
+                    <li class="navbar-brand">@ViewData["Title"]</li>
+                </ul>
+            </div>
+
+            @*
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Download Generator</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <!-- Sidbar button toggle -->
+                        <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                    }
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark">@ViewData["Title"]</a>
+                                </li>
+
+                            }
+                            @await Html.PartialAsync("_LoginPartial")
+                        </ul>
+                    </div>
+                </div>
+            *@
+        </nav>
+    </header>
+    <div class="d-flex" id="wrapper">
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div> <!-- Page Content -->
+    </div> <!-- wrapper -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

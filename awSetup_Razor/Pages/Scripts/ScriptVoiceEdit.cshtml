@@ -1,0 +1,138 @@
+﻿@page
+@model awSetup_Razor.Pages.Scripts.EditModel
+
+<h3>@ViewData["messagetype"]:</h3>
+<h4>Voice Script</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8 offset-sm-2">
+        <form method="post">
+
+            <div class="tab" role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    @*http://bestjquery.com/tutorial/tab/demo37/*@
+                    <li role="presentation"><a href="#script" class="active" aria-controls="Script" role="tab" data-toggle="tab">Script</a></li>
+                    <li role="presentation"><a href="#actions" aria-controls="Actions" role="tab" data-toggle="tab">Actions</a></li>
+                    <li role="presentation"><a href="#tags" aria-controls="Tags" role="tab" data-toggle="tab">Tags</a></li>
+                    <li role="presentation"><a href="#schedules" aria-controls="Schedules" role="tab" data-toggle="tab">Schedules</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content tabs">
+                    <div role="tabpanel" class="tab-pane fade show active" id="script">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Scripts.ScriptId" />
+                        <div class="form-group">
+                            <label asp-for="Scripts.MessageTypeId" class="control-label"></label>
+                            <select asp-for="Scripts.MessageTypeId" class="form-control" asp-items="ViewBag.MessageTypeId"></select>
+                            <span asp-validation-for="Scripts.MessageTypeId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Scripts.LanguageCode" class="control-label"></label>
+                            <input asp-for="Scripts.LanguageCode" class="form-control" />
+                            <span asp-validation-for="Scripts.LanguageCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Scripts.DeliveryTypeCode" class="control-label"></label>
+                            <input asp-for="Scripts.DeliveryTypeCode" class="form-control" />
+                            <span asp-validation-for="Scripts.DeliveryTypeCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Scripts.MessageScript" class="control-label"></label>
+                            <input asp-for="Scripts.MessageScript" class="form-control" />
+                            <span asp-validation-for="Scripts.MessageScript" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Scripts.MessagePrefix" class="control-label"></label>
+                            <input asp-for="Scripts.MessagePrefix" class="form-control" />
+                            <span asp-validation-for="Scripts.MessagePrefix" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Scripts.CallAttempts" class="control-label"></label>
+                            <input asp-for="Scripts.CallAttempts" class="form-control" />
+                            <span asp-validation-for="Scripts.CallAttempts" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Scripts.RequeueDelay" class="control-label"></label>
+                            <input asp-for="Scripts.RequeueDelay" class="form-control" />
+                            <span asp-validation-for="Scripts.RequeueDelay" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="actions">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <i class="fas fa-plus-square"></i>
+                                    </th>
+                                    <th>
+                                        <b>Key Pressed</b>
+                                    </th>
+                                    <th>
+                                        <b>Action Code</b>
+                                    </th>
+                                    <th>
+                                        <b>Response Text</b>
+                                    </th>
+                                    <th>
+                                        <b>Dial Number</b>
+                                    </th>
+                                    <th>
+                                        <b>Dial Tag</b> &nbsp;(Column in csv file)
+                                    </th>
+                                    <th>
+                                    </th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Scripts.ScriptActions.OrderBy(s => s.Response))
+                                {
+                                    <tr>
+                                        <td>
+                                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scriptaction" data-url="@Url.Action("ScriptActionsEdit", new {scriptactionsid = item.ScriptActionId })" title="Edit Action"></a>
+                                        </td>
+                                        <td>
+                                            @item.Response
+                                        </td>
+                                        <td>
+                                            @item.ActionCode
+                                        </td>
+                                        <td>
+                                            @item.ReplyText
+                                        </td>
+                                        <td>
+                                            @item.Dial
+                                        </td>
+                                        <td>
+                                            @item.DialTag
+                                        </td>
+                                        <td>
+                                            <a class="btn fas fa-trash-alt" data-toggle="ajax-modal" data-target="#delete-scriptaction" data-url="@Url.Action("ScriptActionsDelete", new {scriptactionsid = item.ScriptActionId })" title="Remove Action"></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="tags">
+                        TAG PAGE
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="schedules">
+                        SCHEDULE PAGE
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

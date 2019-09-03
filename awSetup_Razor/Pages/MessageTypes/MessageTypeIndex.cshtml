@@ -1,0 +1,105 @@
+﻿@page
+@model awSetup_Razor.Pages.MessageTypes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p>
+    <h4>Message Types</h4>
+
+
+    <a asp-page="Create"><i class="far fa-plus-square"></i></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].CustomerPhoneId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].MessageLabel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].UseVoice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].UseEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].UseText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].FilenameCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].DeliveryTypeTag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].LanguageTag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].ReQueueDelay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTypes[0].CallAttempts)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MessageTypes)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerPhoneId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MessageLabel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UseVoice)
+                    <a asp-page="../Scripts/ScriptVoiceEdit" asp-route-id="@item.MessageTypeId"><i class="fas fa-phone"></i></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UseEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UseText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FilenameCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryTypeTag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LanguageTag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReQueueDelay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CallAttempts)
+                </td>
+                <td>
+                    <a asp-page="./MessageTypeEdit" asp-route-id="@item.MessageTypeId"><i class="far fa-edit"></i></a> |
+                    <a asp-page="./MessageTypeDetails" asp-route-id="@item.MessageTypeId"><i class="far fa-eye"></i></a> |
+                    <a asp-page="./MessageTypeDelete" asp-route-id="@item.MessageTypeId"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

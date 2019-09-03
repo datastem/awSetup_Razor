@@ -1,0 +1,90 @@
+﻿@page
+@model awSetup_Razor.Pages.MessageTypes.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>MessageTypes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MessageTypes.MessageTypeId" />
+            <div class="form-group">
+                <label asp-for="MessageTypes.CustomerId" class="control-label"></label>
+                <input asp-for="MessageTypes.CustomerId" class="form-control" />
+                <span asp-validation-for="MessageTypes.CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.CustomerPhoneId" class="control-label"></label>
+                <input asp-for="MessageTypes.CustomerPhoneId" class="form-control" />
+                <span asp-validation-for="MessageTypes.CustomerPhoneId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.MessageLabel" class="control-label"></label>
+                <input asp-for="MessageTypes.MessageLabel" class="form-control" />
+                <span asp-validation-for="MessageTypes.MessageLabel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.UseEmail" class="control-label"></label>
+                <input asp-for="MessageTypes.UseEmail" class="form-control" />
+                <span asp-validation-for="MessageTypes.UseEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.UseText" class="control-label"></label>
+                <input asp-for="MessageTypes.UseText" class="form-control" />
+                <span asp-validation-for="MessageTypes.UseText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.UseVoice" class="control-label"></label>
+                <input asp-for="MessageTypes.UseVoice" class="form-control" />
+                <span asp-validation-for="MessageTypes.UseVoice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.FilenameCode" class="control-label"></label>
+                <input asp-for="MessageTypes.FilenameCode" class="form-control" />
+                <span asp-validation-for="MessageTypes.FilenameCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.Active" class="control-label"></label>
+                <input asp-for="MessageTypes.Active" class="form-control" />
+                <span asp-validation-for="MessageTypes.Active" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.DeliveryTypeTag" class="control-label"></label>
+                <input asp-for="MessageTypes.DeliveryTypeTag" class="form-control" />
+                <span asp-validation-for="MessageTypes.DeliveryTypeTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.LanguageTag" class="control-label"></label>
+                <input asp-for="MessageTypes.LanguageTag" class="form-control" />
+                <span asp-validation-for="MessageTypes.LanguageTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.ReQueueDelay" class="control-label"></label>
+                <input asp-for="MessageTypes.ReQueueDelay" class="form-control" />
+                <span asp-validation-for="MessageTypes.ReQueueDelay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageTypes.CallAttempts" class="control-label"></label>
+                <input asp-for="MessageTypes.CallAttempts" class="form-control" />
+                <span asp-validation-for="MessageTypes.CallAttempts" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

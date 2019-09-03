@@ -1,0 +1,135 @@
+﻿@page
+@model awSetup_Razor.Pages.Customers.EditModel
+
+
+<br />
+<h4>Edit Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-row">
+                <div class="form-group col-sm-9">
+                    <input asp-for="Customers.CustomerId" hidden />
+                    <label asp-for="Customers.CustomerName" class="control-label font-weight-bold">Customer Name</label>
+                    <input asp-for="Customers.CustomerName" class="form-control" />
+                    <span asp-validation-for="Customers.CustomerName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label asp-for="Customers.CustomerCode" class="control-label"></label>
+                    <input asp-for="Customers.CustomerCode" class="form-control" />
+                    <span asp-validation-for="Customers.CustomerCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-1">
+                    <div class="custom-control custom-switch">
+                        <input asp-for="Customers.Active" class="custom-control-input" />
+                        <label asp-for="Customers.Active" class="custom-control-label"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-3">
+                    <label asp-for="Customers.BillingContact" class="control-label">Contact</label>
+                    <input asp-for="Customers.BillingContact" class="form-control" />
+                    <span asp-validation-for="Customers.BillingContact" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-9">
+                    <label asp-for="Customers.BillingEmail" class="control-label"></label>
+                    <input asp-for="Customers.BillingEmail" class="form-control" />
+                    <span asp-validation-for="Customers.BillingEmail" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customers.BillingAddress1" class="control-label">Address</label>
+                <input asp-for="Customers.BillingAddress1" class="form-control" />
+                <span asp-validation-for="Customers.BillingAddress1" class="text-danger"></span>
+                <input asp-for="Customers.BillingAddress2" class="form-control" />
+                <span asp-validation-for="Customers.BillingAddress2" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Customers.BillingCity" class="control-label">City</label>
+                    <input asp-for="Customers.BillingCity" class="form-control" />
+                    <span asp-validation-for="Customers.BillingCity" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Customers.BillingState" class="control-label">State</label>
+                    <input asp-for="Customers.BillingState" class="form-control" />
+                    <span asp-validation-for="Customers.BillingState" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Customers.BillingZip" class="control-label">Zip</label>
+                    <input asp-for="Customers.BillingZip" class="form-control" />
+                    <span asp-validation-for="Customers.BillingZip" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Customers.BillingPhone" class="control-label">Customer Phone</label>
+                    <input asp-for="Customers.BillingPhone" class="form-control" />
+                    <span asp-validation-for="Customers.BillingPhone" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Customers.DefaultAreaCode" class="control-label"></label>
+                    <input asp-for="Customers.DefaultAreaCode" class="form-control" />
+                    <span asp-validation-for="Customers.DefaultAreaCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Customers.TimeZoneOffset" class="control-label"></label>
+                    <input asp-for="Customers.TimeZoneOffset" class="form-control" />
+                    <span asp-validation-for="Customers.TimeZoneOffset" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Customers.FtpfolderPath" class="control-label">FTP Path</label>
+                    <input asp-for="Customers.FtpfolderPath" class="form-control" />
+                    <span asp-validation-for="Customers.FtpfolderPath" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Customers.FtpuserName" class="control-label">UserName</label>
+                    <input asp-for="Customers.FtpuserName" class="form-control" />
+                    <span asp-validation-for="Customers.FtpuserName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Customers.Ftppassword" class="control-label">Password</label>
+                    <input asp-for="Customers.Ftppassword" class="form-control" />
+                    <span asp-validation-for="Customers.Ftppassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <label asp-for="Customers.TwilioAccountSid" class="form-group col-sm-3"></label>
+                <input asp-for="Customers.TwilioAccountSid" class="form-group form-control col-sm-9" />
+                <span asp-validation-for="Customers.TwilioAccountSid" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="Customers.TwilioAuthToken" class="form-group col-sm-3"></label>
+                <input asp-for="Customers.TwilioAuthToken" class="form-group form-control col-sm-9" />
+                <span asp-validation-for="Customers.TwilioAuthToken" class="text-danger"></span>
+            </div>
+
+            <div class="form-row">
+                <label asp-for="Customers.SendGridApikey" class="form-group col-sm-3"></label>
+                <input asp-for="Customers.SendGridApikey" class="form-group form-control col-sm-9" />
+                <span asp-validation-for="Customers.SendGridApikey" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="Customers.EmailAddress" class="form-group col-sm-3"></label>
+                <input asp-for="Customers.EmailAddress" class="form-group form-control col-sm-9" />
+                <span asp-validation-for="Customers.EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="edit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./CustomerIndex">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

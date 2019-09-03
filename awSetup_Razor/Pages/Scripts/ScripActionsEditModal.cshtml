@@ -1,0 +1,61 @@
+﻿@page
+@model awSetup_Razor.Pages.Scripts.ScripActionsEditModalModel
+
+@{
+    ViewData["Title"] = "ScripActionsEditModal";
+}
+
+<div class="modal fade" id="edit-scriptaction" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="headerLabel">Edit Script Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="ScriptActionsEdit">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Response"></label>
+                        <select asp-for="Response" class="form-control" asp-items="@ViewBag.Keypad"></select>
+                        <span asp-validation-for="Response" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ActionCode"></label>
+                        <select asp-for="ActionCode" class="form-control" asp-items="@ViewBag.VoiceActionCodes"></select>
+                        <span asp-validation-for="ActionCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Dial"></label>
+                        <input asp-for="Dial" class="form-control" />
+                        <span asp-validation-for="Dial" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DialTag"></label>
+                        <input asp-for="DialTag" class="form-control" />
+                        <span asp-validation-for="DialTag" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReplyText"></label>
+                        <input asp-for="ReplyText" class="form-control" />
+                        <span asp-validation-for="ReplyText" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="ScriptActionId" />
+                    <input type="hidden" asp-for="ScriptId" />
+                    <input type="hidden" asp-for="StoredProcedure" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+                <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Saving...
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+﻿@page
+@model awSetup_Razor.Pages.Customers.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Customers</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.CustomerName)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.CustomerName) [@Html.DisplayFor(model => model.Customers.CustomerCode)]
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.TimeZoneOffset)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.TimeZoneOffset)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.BillingContact)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.BillingContact)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.BillingAddress1)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.BillingAddress1)
+            <br/>
+            @Html.DisplayFor(model => model.Customers.BillingAddress2)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.BillingCity)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.BillingCity) , @Html.DisplayNameFor(model => model.Customers.BillingState) @Html.DisplayFor(model => model.Customers.BillingState) @Html.DisplayFor(model => model.Customers.BillingZip)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.BillingPhone)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.BillingPhone)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.BillingEmail)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.BillingEmail)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.DefaultAreaCode)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.DefaultAreaCode)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.FtpfolderPath)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.FtpfolderPath)&nbsp;@Html.DisplayNameFor(model => model.Customers.FtpuserName)&nbsp;|&nbsp;@Html.DisplayFor(model => model.Customers.FtpuserName)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.Ftppassword)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.Ftppassword)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.SendGridApikey)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.SendGridApikey)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.EmailAddress)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.EmailAddress)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.TwilioAccountSid)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.TwilioAccountSid)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.TwilioAuthToken)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.TwilioAuthToken)
+        </dd>
+        <dt class="col-sm-2 offset-2">
+            @Html.DisplayNameFor(model => model.Customers.Active)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Customers.Active)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./CustomerEdit" asp-route-id="@Model.Customers.CustomerId">Edit</a> |
+    <a asp-page="./CustomerIndex">Back to List</a>
+</div>

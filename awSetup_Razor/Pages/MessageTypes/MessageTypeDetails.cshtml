@@ -1,0 +1,91 @@
+﻿@page
+@model awSetup_Razor.Pages.MessageTypes.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MessageTypes</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.CustomerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.CustomerId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.CustomerPhoneId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.CustomerPhoneId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.MessageLabel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.MessageLabel)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.UseEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.UseEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.UseText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.UseText)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.UseVoice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.UseVoice)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.FilenameCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.FilenameCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.Active)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.Active)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.DeliveryTypeTag)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.DeliveryTypeTag)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.LanguageTag)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.LanguageTag)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.ReQueueDelay)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.ReQueueDelay)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MessageTypes.CallAttempts)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MessageTypes.CallAttempts)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.MessageTypes.MessageTypeId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
