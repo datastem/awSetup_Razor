@@ -89,7 +89,7 @@
                                 {
                                     <tr>
                                         <td>
-                                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scriptaction" data-url="@Url.Action("ScriptActionsEdit", new {scriptactionsid = item.ScriptActionId })" title="Edit Action"></a>
+                                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scriptaction" data-url="@Url.Page("ScriptVoiceEdit", "ScriptActionsEditModal", new {id = item.ScriptActionId }))" title="Edit Action"></a>
                                         </td>
                                         <td>
                                             @item.Response

@@ -23,6 +23,7 @@ namespace awSetup_Razor.Models
         public virtual DbSet<MessageTypes> MessageTypes { get; set; }
         public virtual DbSet<ScriptSchedules> ScriptSchedules { get; set; }
         public virtual DbSet<ScriptTags> ScriptTags { get; set; }
+        public virtual DbSet<ScriptActions> ScriptActions { get; set; }
         public virtual DbSet<Scripts> Scripts { get; set; }
 
         // Unable to generate entity type for table 'dbo.NoCall'. Please see the warning messages.
@@ -177,6 +178,22 @@ namespace awSetup_Razor.Models
                     .HasForeignKey(d => d.ScriptId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ScriptTags_Scripts");
+            });
+
+            modelBuilder.Entity<ScriptActions>(entity =>
+            {
+                entity.Property(e => e.Response).IsUnicode(false);
+                entity.Property(e => e.ActionCode).IsUnicode(false);
+                entity.Property(e => e.Dial).IsUnicode(false);
+                entity.Property(e => e.DialTag).IsUnicode(false);
+                entity.Property(e => e.ReplyText).IsUnicode(false);
+                entity.Property(e => e.StoredProcedure).IsUnicode(false);
+
+                entity.HasOne(d => d.Script)
+                    .WithMany(p => p.ScriptActions)
+                    .HasForeignKey(d => d.ScriptId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ScriptActions_Scripts");
             });
 
             modelBuilder.Entity<Scripts>(entity =>

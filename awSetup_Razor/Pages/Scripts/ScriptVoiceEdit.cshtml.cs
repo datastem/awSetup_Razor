@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using awSetup_Razor.Models;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace awSetup_Razor.Pages.Scripts
 {
@@ -70,7 +71,18 @@ namespace awSetup_Razor.Pages.Scripts
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ScriptIndex");
+        }
+
+        public async Task<PartialViewResult> OnGetScriptActionsEdit(int? id)
+        {
+            ScriptActions scriptaction = await _context.ScriptActions.Where(s => s.ScriptActionId == id).FirstOrDefaultAsync();
+            //ViewData.Keypad =
+            return new PartialViewResult
+            {
+                ViewName = "ScriptActionEditModal",
+                ViewData = new ViewDataDictionary<ScriptActions>(ViewData, scriptaction)
+            };
         }
 
         private bool ScriptsExists(int id)

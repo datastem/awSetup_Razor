@@ -1,4 +1,4 @@
-﻿@model awSetup_Razor.Models.ScriptActions
+﻿@model awSetup_Razor.Pages.Scripts.ScriptActionsEditModalModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -16,33 +16,33 @@
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="Response"></label>
-                        <select asp-for="Response" class="form-control" asp-items="@ViewBag.Keypad"></select>
-                        <span asp-validation-for="Response" class="text-danger"></span>
+                        <label asp-for="ScriptActions.Response"></label>
+                        <select asp-for="ScriptActions.Response" class="form-control" asp-items="@ViewBag.Keypad"></select>
+                        <span asp-validation-for="ScriptActions.Response" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ActionCode"></label>
-                        <select asp-for="ActionCode" class="form-control" asp-items="@ViewBag.VoiceActionCodes"></select>
-                        <span asp-validation-for="ActionCode" class="text-danger"></span>
+                        <label asp-for="ScriptActions.ActionCode"></label>
+                        <select asp-for="ScriptActions.ActionCode" class="form-control" asp-items="@ViewBag.VoiceActionCodes"></select>
+                        <span asp-validation-for="ScriptActions.ActionCode" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Dial"></label>
-                        <input asp-for="Dial" class="form-control" />
-                        <span asp-validation-for="Dial" class="text-danger"></span>
+                        <label asp-for="ScriptActions.Dial"></label>
+                        <input asp-for="ScriptActions.Dial" class="form-control" />
+                        <span asp-validation-for="ScriptActions.Dial" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="DialTag"></label>
-                        <input asp-for="DialTag" class="form-control" />
-                        <span asp-validation-for="DialTag" class="text-danger"></span>
+                        <label asp-for="ScriptActions.DialTag"></label>
+                        <input asp-for="ScriptActions.DialTag" class="form-control" />
+                        <span asp-validation-for="ScriptActions.DialTag" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ReplyText"></label>
-                        <input asp-for="ReplyText" class="form-control" />
-                        <span asp-validation-for="ReplyText" class="text-danger"></span>
+                        <label asp-for="ScriptActions.ReplyText"></label>
+                        <input asp-for="ScriptActions.ReplyText" class="form-control" />
+                        <span asp-validation-for="ScriptActions.ReplyText" class="text-danger"></span>
                     </div>
-                    <input type="hidden" asp-for="ScriptActionId" />
-                    <input type="hidden" asp-for="ScriptId" />
-                    <input type="hidden" asp-for="StoredProcedure" />
+                    <input type="hidden" asp-for="ScriptActions.ScriptActionId" />
+                    <input type="hidden" asp-for="ScriptActions.ScriptId" />
+                    <input type="hidden" asp-for="ScriptActions.StoredProcedure" />
                 </form>
             </div>
             <div class="modal-footer">
@@ -56,6 +56,10 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
+    <script src="~/js/ScriptEdit.js"></script>
+    <script src="~/js/modal.js"></script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
