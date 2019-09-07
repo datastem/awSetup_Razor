@@ -1,4 +1,4 @@
-﻿@model awSetup_Razor.Pages.Scripts.ScriptActionsEditModalModel
+﻿@model awSetup_Razor.Models.ViewModels.ActionEdit
 @{
     ViewData["Title"] = "Edit";
 }
@@ -12,37 +12,37 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-action="ScriptActionsEdit">
+                <form asp-page-handler="ScriptActionsEdit">
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="ScriptActions.Response"></label>
-                        <select asp-for="ScriptActions.Response" class="form-control" asp-items="@ViewBag.Keypad"></select>
-                        <span asp-validation-for="ScriptActions.Response" class="text-danger"></span>
+                        <label asp-for="Scriptaction.Response"></label>
+                        <select asp-for="Scriptaction.Response" class="form-control" asp-items="@Model.AvailableresponsesSL"></select>
+                        <span asp-validation-for="Scriptaction.Response" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ScriptActions.ActionCode"></label>
-                        <select asp-for="ScriptActions.ActionCode" class="form-control" asp-items="@ViewBag.VoiceActionCodes"></select>
-                        <span asp-validation-for="ScriptActions.ActionCode" class="text-danger"></span>
+                        <label asp-for="Scriptaction.ActionCode"></label>
+                        <select asp-for="Scriptaction.ActionCode" class="form-control" asp-items="@Model.AvailablecodesSL"></select>
+                        <span asp-validation-for="Scriptaction.ActionCode" ActionCode" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ScriptActions.Dial"></label>
-                        <input asp-for="ScriptActions.Dial" class="form-control" />
-                        <span asp-validation-for="ScriptActions.Dial" class="text-danger"></span>
+                        <label asp-for="Scriptaction.Dial"></label>
+                        <input asp-for="Scriptaction.Dial" class="form-control" />
+                        <span asp-validation-for="Scriptaction.Dial" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ScriptActions.DialTag"></label>
-                        <input asp-for="ScriptActions.DialTag" class="form-control" />
-                        <span asp-validation-for="ScriptActions.DialTag" class="text-danger"></span>
+                        <label asp-for="Scriptaction.DialTag"></label>
+                        <input asp-for="Scriptaction.DialTag" class="form-control" />
+                        <span asp-validation-for="Scriptaction.DialTag" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ScriptActions.ReplyText"></label>
-                        <input asp-for="ScriptActions.ReplyText" class="form-control" />
-                        <span asp-validation-for="ScriptActions.ReplyText" class="text-danger"></span>
+                        <label asp-for="Scriptaction.ReplyText"></label>
+                        <input asp-for="Scriptaction.ReplyText" class="form-control" />
+                        <span asp-validation-for="Scriptaction.ReplyText" class="text-danger"></span>
                     </div>
-                    <input type="hidden" asp-for="ScriptActions.ScriptActionId" />
-                    <input type="hidden" asp-for="ScriptActions.ScriptId" />
-                    <input type="hidden" asp-for="ScriptActions.StoredProcedure" />
+                    <input type="hidden" asp-for="Scriptaction.ScriptActionId" />
+                    <input type="hidden" asp-for="Scriptaction.ScriptId" />
+                    <input type="hidden" asp-for="Scriptaction.StoredProcedure" />
                 </form>
             </div>
             <div class="modal-footer">
@@ -58,8 +58,6 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/ScriptEdit.js"></script>
-    <script src="~/js/modal.js"></script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

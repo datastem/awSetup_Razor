@@ -4,6 +4,9 @@
 <h3>@ViewData["messagetype"]:</h3>
 <h4>Voice Script</h4>
 <hr />
+
+<div id="modal-placeholder"></div>
+
 <div class="row">
     <div class="col-md-8 offset-sm-2">
         <form method="post">
@@ -60,59 +63,7 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="actions">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <i class="fas fa-plus-square"></i>
-                                    </th>
-                                    <th>
-                                        <b>Key Pressed</b>
-                                    </th>
-                                    <th>
-                                        <b>Action Code</b>
-                                    </th>
-                                    <th>
-                                        <b>Response Text</b>
-                                    </th>
-                                    <th>
-                                        <b>Dial Number</b>
-                                    </th>
-                                    <th>
-                                        <b>Dial Tag</b> &nbsp;(Column in csv file)
-                                    </th>
-                                    <th>
-                                    </th>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Scripts.ScriptActions.OrderBy(s => s.Response))
-                                {
-                                    <tr>
-                                        <td>
-                                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scriptaction" data-url="@Url.Page("ScriptVoiceEdit", "ScriptActionsEditModal", new {id = item.ScriptActionId }))" title="Edit Action"></a>
-                                        </td>
-                                        <td>
-                                            @item.Response
-                                        </td>
-                                        <td>
-                                            @item.ActionCode
-                                        </td>
-                                        <td>
-                                            @item.ReplyText
-                                        </td>
-                                        <td>
-                                            @item.Dial
-                                        </td>
-                                        <td>
-                                            @item.DialTag
-                                        </td>
-                                        <td>
-                                            <a class="btn fas fa-trash-alt" data-toggle="ajax-modal" data-target="#delete-scriptaction" data-url="@Url.Action("ScriptActionsDelete", new {scriptactionsid = item.ScriptActionId })" title="Remove Action"></a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        @await Html.PartialAsync("ScriptActionsTable", Model)
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="tags">
                         TAG PAGE
@@ -134,5 +85,6 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/modal.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
