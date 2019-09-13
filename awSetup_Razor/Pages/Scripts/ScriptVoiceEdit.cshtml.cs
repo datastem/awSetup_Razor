@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using awSetup_Razor.Models;
 using awSetup_Razor.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace awSetup_Razor.Pages.Scripts
 {
@@ -118,18 +119,24 @@ namespace awSetup_Razor.Pages.Scripts
             };
         }
 
-        public async Task<IActionResult> OnGetScriptActionsTableRefresh(int scriptid)
+        public async Task<PartialViewResult> OnGetScriptActionsTableRefresh(int scriptid)
         {
             Scripts = await _context.Scripts.Where(s => s.ScriptId == scriptid && s.DeliveryTypeCode == "V")
                 .Include(s => s.ScriptActions)
                 .Include(s => s.ScriptTags)
                 .Include(s => s.ScriptSchedules)
                 .FirstOrDefaultAsync();
-            return new PartialViewResult
+
+            PartialViewResult pv = new PartialViewResult
             {
                 ViewName = @".\Scripts\ScriptActionsTable",
-                ViewData = new ViewDataDictionary<EditModel>(ViewData, Scripts)
+                //ViewData = new ViewDataDictionary<ScriptActions>(ViewData, Scripts.ScriptActions)
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                {
+                    Model = Scripts.ScriptActions
+                }
             };
+            return pv;
         }
 
         private bool ScriptsExists(int id)

@@ -10,8 +10,8 @@ namespace awSetup_Razor.Models
         public Scripts()
         {
             ScriptActions = new List<ScriptActions>();
-            ScriptSchedules = new HashSet<ScriptSchedules>();
-            ScriptTags = new HashSet<ScriptTags>();
+            ScriptSchedules = new List<ScriptSchedules>();
+            ScriptTags = new List<ScriptTags>();
         }
 
         [Key]

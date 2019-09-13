@@ -63,13 +63,13 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="actions">
-                        @await Html.PartialAsync("ScriptActionsTable", Model)
+                        @await Html.PartialAsync("ScriptActionsTable", Model.Scripts.ScriptActions)
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="tags">
                         TAG PAGE
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="schedules">
-                        SCHEDULE PAGE
+                        @await Html.PartialAsync("ScriptSchedulesPartial", Model.Scripts.ScriptSchedules)
                     </div>
                 </div>
             </div>
@@ -86,5 +86,6 @@
 
 @section Scripts {
     <script src="~/js/modal.js"></script>
+    <script src="~/js/ScriptSchedulesEdit.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

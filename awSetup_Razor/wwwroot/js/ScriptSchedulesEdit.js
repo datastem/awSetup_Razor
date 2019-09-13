@@ -1,35 +1,4 @@
-﻿function toggleEmail() {
-    var x = document.getElementById("tabemail");
-    if (x.style.visibility === 'hidden') {
-        x.style.visibility = 'visible'
-    } else {
-        x.style.visibility = 'hidden';
-    }
-    $.post('/Scripts/EditToggles', $("#UseEmailEdit").serialize());
-};
-
-function toggleText() {
-    var x = document.getElementById("tabtext");
-    if (x.style.visibility === 'hidden') {
-        x.style.visibility = 'visible'
-    } else {
-        x.style.visibility = 'hidden';
-    }
-    $.post('/Scripts/EditToggles', $("#UseTextEdit").serialize());
-};
-
-function toggleVoice() {
-    var x = document.getElementById("tabvoice");
-    if (x.style.visibility === 'hidden') {
-        x.style.visibility = 'visible'
-    } else {
-        x.style.visibility = 'hidden';
-    }
-
-    $.post('/Scripts/EditToggles', $("#UseVoiceEdit").serialize());
-};
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $("input[type=checkbox]").click(function (event) {
         var dowcheckbox = event.target;
         var dowid = dowcheckbox.id.split("__");
