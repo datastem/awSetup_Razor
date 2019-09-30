@@ -1,0 +1,58 @@
+﻿@page
+@model awSetup_Razor.Pages.Scripts.ScriptEditModel
+
+@{
+    ViewData["Title"] = "Create";
+    ViewData["ActivePage"] = ManageScriptPages.ScriptEdit;
+}
+
+<h1>Create</h1>
+
+<h4>Scripts</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Scripts.DeliveryTypeCode" class="form-control" hidden />
+            <input asp-for="Scripts.MessagePrefix" class="form-control" hidden />
+            <div class="form-group">
+                <label asp-for="Scripts.MessageTypeId" class="control-label"></label>
+                <input asp-for="Scripts.MessageTypeId" class="form-control" />
+            </div>
+            @*<div class="form-group">
+            <label asp-for="Scripts.LanguageCode" class="control-label"></label>
+            <input asp-for="Scripts.LanguageCode" class="form-control" hidden/>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="Scripts.MessageScript" class="control-label"></label>
+                <textarea class="form-control" rows="4">@Model.Scripts.MessageScript</textarea> 
+                <span asp-validation-for="Scripts.MessageScript" class="text-danger"></span>
+            </div>
+            @if (Model.Scripts.DeliveryTypeCode == "V")
+            {
+                <div class="form-group">
+                    <label asp-for="Scripts.CallAttempts" class="control-label"></label>
+                    <input asp-for="Scripts.CallAttempts" class="form-control" />
+                    <span asp-validation-for="Scripts.CallAttempts" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Scripts.RequeueDelay" class="control-label"></label>
+                    <input asp-for="Scripts.RequeueDelay" class="form-control" />
+                    <span asp-validation-for="Scripts.RequeueDelay" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

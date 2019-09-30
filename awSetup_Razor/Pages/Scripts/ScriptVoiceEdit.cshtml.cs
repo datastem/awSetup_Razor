@@ -10,14 +10,15 @@ using awSetup_Razor.Models;
 using awSetup_Razor.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Http;
 
 namespace awSetup_Razor.Pages.Scripts
 {
-    public class EditModel : PageModel
+    public class ScriptVoiceEditModel : PageModel
     {
         private readonly awSetup_Razor.Models.ApplicationDbContext _context;
 
-        public EditModel(awSetup_Razor.Models.ApplicationDbContext context)
+        public ScriptVoiceEditModel(awSetup_Razor.Models.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -25,12 +26,9 @@ namespace awSetup_Razor.Pages.Scripts
         [BindProperty]
         public Models.Scripts Scripts { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+
             Models.MessageTypes messagetype = _context.MessageTypes.FirstOrDefault(m => m.MessageTypeId == id);
             ViewData["messagetype"] = messagetype.MessageLabel;
 
@@ -40,10 +38,15 @@ namespace awSetup_Razor.Pages.Scripts
                 .Include(s => s.ScriptSchedules)
                 .FirstOrDefaultAsync();
 
+            Scripts.ScriptSchedules = Scripts.ScriptSchedules.OrderBy(s => s.Dow).ToList();
+
             if (Scripts == null)
             {
                 return NotFound();
             }
+
+            HttpContext.Session.SetInt32("CustomerID", messagetype.CustomerId);
+
             ViewData["MessageTypeId"] = new SelectList(_context.MessageTypes, "MessageTypeId", "MessageTypeId");
             return Page();
         }
@@ -52,10 +55,15 @@ namespace awSetup_Razor.Pages.Scripts
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return RedirectToPage("/Scripts/ScriptVoiceEdit", new { id = Scripts.MessageTypeId });
+                //return Page();
             }
 
             _context.Attach(Scripts).State = EntityState.Modified;
+            foreach (var item in Scripts.ScriptSchedules)
+            {
+                _context.Attach(item).State = EntityState.Modified;
+            }
 
             try
             {
@@ -72,8 +80,9 @@ namespace awSetup_Razor.Pages.Scripts
                     throw;
                 }
             }
+            int Customerid = HttpContext.Session.GetInt32("CustomerID").Value;
 
-            return RedirectToPage("./ScriptIndex");
+            return RedirectToPage("/MessageTypes/MessageTypeIndex", new {customerid = Customerid });
         }
 
         public async Task<PartialViewResult> OnGetScriptActionsEdit(int? id)
@@ -129,7 +138,7 @@ namespace awSetup_Razor.Pages.Scripts
 
             PartialViewResult pv = new PartialViewResult
             {
-                ViewName = @".\Scripts\ScriptActionsTable",
+                ViewName = @".\Scripts\ScriptActionsTablePartial",
                 //ViewData = new ViewDataDictionary<ScriptActions>(ViewData, Scripts.ScriptActions)
                 ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
                 {
@@ -138,6 +147,8 @@ namespace awSetup_Razor.Pages.Scripts
             };
             return pv;
         }
+
+
 
         private bool ScriptsExists(int id)
         {

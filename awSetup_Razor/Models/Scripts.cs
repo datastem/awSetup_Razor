@@ -43,7 +43,7 @@ namespace awSetup_Razor.Models
         public virtual ICollection<ScriptActions> ScriptActions { get; set; }
 
         [InverseProperty("Script")]
-        public virtual ICollection<ScriptSchedules> ScriptSchedules { get; set; }
+        public virtual IList<ScriptSchedules> ScriptSchedules { get; set; }
 
         [InverseProperty("Script")]
         public virtual ICollection<ScriptTags> ScriptTags { get; set; }

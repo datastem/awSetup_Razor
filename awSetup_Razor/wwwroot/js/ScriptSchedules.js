@@ -24,12 +24,14 @@
 
 function VoiceScheduleCopy(defaultStartTime, defaultEndTime) {
     for (i = 0; i < 7; i++) {
-        var dowswitch = document.getElementById("z" + i.toString() + "__DowSwitch").checked;
-        if (dowswitch) {
-            var starttimeobj = document.getElementById("z" + i.toString() + "__StartTime");
+        var prefix = "ScriptSchedules_" + i.toString();
+        var valid = document.getElementById(prefix + "__IsActive");
+        var isactive = document.getElementById(prefix + "__IsActive").checked;
+        if (isactive) {
+            var starttimeobj = document.getElementById(prefix + "__StartTime");
             starttimeobj.value = defaultStartTime;
 
-            var endtimeobj = document.getElementById("z" + i.toString() + "__EndTime");
+            var endtimeobj = document.getElementById(prefix + "__EndTime");
             endtimeobj.value = defaultEndTime;
         }
     }

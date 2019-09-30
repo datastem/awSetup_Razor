@@ -8,6 +8,7 @@ namespace awSetup_Razor.Models.ViewModels
 {
     public class ActionEdit
     {
+        public int ScriptId { get; set; }
         public ScriptActions Scriptaction { get; set; }
         public List<SelectListItem> AvailablecodesSL { get; set; }
         public List<SelectListItem> AvailableresponsesSL { get; set; }

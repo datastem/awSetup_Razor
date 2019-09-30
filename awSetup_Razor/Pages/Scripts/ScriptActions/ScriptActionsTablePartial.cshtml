@@ -1,10 +1,13 @@
 ﻿@model List<awSetup_Razor.Models.ScriptActions>
+@using Microsoft.AspNetCore.Http
 
-<table class="table table-sm" data-url="@Url.Page("ScriptVoiceEdit", "ScriptActionsTableRefresh", new { scriptid = Model.FirstOrDefault().ScriptId })">
+<table class="table table-sm" data-url="@Url.Page("ScriptActions", "ScriptActionsTableRefresh", new { scriptid = Context.Session.GetInt32("ScriptId") })">
     <thead>
         <tr>
             <th>
-                <i class="fas fa-plus-square"></i>
+                <a class="btn fas fa-plus-square" data-toggle="ajax-modal" data-target="#create-scriptaction" 
+                   data-url="@Url.Page("ScriptActions", "ScriptActionsCreate", new {scriptid = Context.Session.GetInt32("ScriptId") })" 
+                   title="Add Action"></a>
             </th>
             <th>
                 <b>Key Pressed</b>
@@ -29,7 +32,9 @@
         {
             <tr>
                 <td>
-                    <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scriptaction" data-url="@Url.Page("ScriptVoiceEdit", "ScriptActionsEdit", new {id = item.ScriptActionId })" title="Edit Action"></a>
+                    <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scriptaction" 
+                       data-url="@Url.Page("ScriptActions", "ScriptActionsEdit", new {id = item.ScriptActionId })" 
+                       title="Edit Action"></a>
                 </td>
                 <td>
                     @item.Response
@@ -47,7 +52,10 @@
                     @item.DialTag
                 </td>
                 <td>
-                    <a class="btn fas fa-trash-alt" data-toggle="ajax-modal" data-target="#delete-scriptaction" data-url="@Url.Action("ScriptActionsDelete", new {scriptactionsid = item.ScriptActionId })" title="Remove Action"></a>
+                    <a class="btn fas fa-trash-alt" data-toggle="ajax-modal" 
+                       data-target="#delete-scriptaction" 
+                       data-url="@Url.Page("ScriptActions", "ScriptActionsDelete", new {id = item.ScriptActionId })" 
+                       title="Remove Action"></a>
                 </td>
             </tr>
         }

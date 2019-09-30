@@ -1,0 +1,107 @@
+﻿@model awSetup_Razor.Models.ScriptActions
+@{
+    ViewData["Title"] = "Delete";
+}Delete
+<div class="modal fade" id="delete-scriptaction" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="headerLabel">Delete Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Response)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Response)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ActionCode)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ActionCode)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Dial)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Dial)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.DialTag)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.DialTag)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.ReplyText)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.ReplyText)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.StoredProcedure)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.StoredProcedure)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Script)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Script.ScriptId)
+                    </dd>
+                </dl>
+                @*<input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Response"></label>
+            <input asp-for="Response" class="form-control" readonly/>
+            <span asp-validation-for="Response" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ActionCode"></label>
+            <input asp-for="ActionCode" class="form-control" readonly/>
+            <span asp-validation-for="ActionCode" ActionCode" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Dial"></label>
+            <input asp-for="Dial" class="form-control" readonly/>
+            <span asp-validation-for="Dial" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DialTag"></label>
+            <input asp-for="DialTag" class="form-control" readonly/>
+            <span asp-validation-for="DialTag" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ReplyText"></label>
+            <input asp-for="ReplyText" class="form-control" readonly/>
+            <span asp-validation-for="ReplyText" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="ScriptActionId" />
+        <input type="hidden" asp-for="ScriptId" />
+        <input type="hidden" asp-for="StoredProcedure" />*@
+                <form asp-page-handler="ScriptActionsDelete" asp-route-id="@Model.ScriptActionId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Delete</button>
+                <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Deleting...
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

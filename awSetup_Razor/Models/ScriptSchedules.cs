@@ -5,7 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace awSetup_Razor.Models
 {
-    public partial class ScriptSchedules
+
+    public partial class ScriptSchedules : IValidatableObject
     {
         [Column("ScriptScheduleID")]
         public int ScriptScheduleId { get; set; }
@@ -29,8 +30,8 @@ namespace awSetup_Razor.Models
         [InverseProperty("ScriptSchedules")]
         public virtual Scripts Script { get; set; }
 
-        [NotMapped]
-        public bool DowSwitch { get; set; }
+        public bool IsActive { get; set; }
+            
 
         [NotMapped]
         public string DowLabel
@@ -49,6 +50,28 @@ namespace awSetup_Razor.Models
                     case 7: label = "Saturday"; break;
                 };
                 return label;
+            }
+        }
+        /*
+           https://dontpaniclabs.com/blog/post/2017/10/25/validating-multiple-fields-in-asp-net-mvc/
+       */
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (IsActive)
+            {
+                if (!StartTime.HasValue)
+                {
+                    yield return new ValidationResult("Start Time is required.", new List<string> { "StartTime" });
+                }
+                if (!EndTime.HasValue)
+                {
+                    yield return new ValidationResult("End Time is required.", new List<string> { "EndTime" });
+                }
+                if (DateTime.Compare(Convert.ToDateTime(StartTime), Convert.ToDateTime(EndTime)) >= 0)
+                {
+                    yield return new ValidationResult("Start Time must be less than End Time", new List<string> { "EndTime" });
+                }
             }
         }
     }
