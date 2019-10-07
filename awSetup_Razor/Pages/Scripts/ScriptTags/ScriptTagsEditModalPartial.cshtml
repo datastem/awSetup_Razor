@@ -1,0 +1,65 @@
+﻿@model awSetup_Razor.Models.ViewModels.TagEdit
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="modal fade" id="edit-scripttag" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="headerLabel">Edit Tag</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="ScriptTagsEdit">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ScriptTag.ScriptTagId" />
+                    <div class="form-group">
+                        <label asp-for="ScriptTag.ScriptId" class="control-label"></label>
+                        <input asp-for="ScriptTag.ScriptId" class="form-control" />
+                        <span asp-validation-for="ScriptTag.ScriptId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ScriptTag.TagName" class="control-label"></label>
+                        <input asp-for="ScriptTag.TagName" class="form-control" />
+                        <span asp-validation-for="ScriptTag.TagName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ScriptTag.FormatString" class="control-label"></label>
+                        <select asp-for="ScriptTag.FormatString" class="form-control" asp-items="@Model.FormatSL"></select>
+                        <span asp-validation-for="ScriptTag.FormatString" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ScriptTag.QueueMapCode" class="control-label"></label>
+                        <select asp-for="ScriptTag.QueueMapCode" class="form-control" asp-items="@Model.QueueMapSL"></select>
+                        <span asp-validation-for="ScriptTag.QueueMapCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="ScriptTag.Active" /> @Html.DisplayNameFor(model => model.ScriptTag.Active)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ScriptTag.DataTypeCode" class="control-label"></label>
+                        <select asp-for="ScriptTag.DataTypeCode" class="form-control" asp-items="@Model.DataTypeSL"></select>
+                        <span asp-validation-for="ScriptTag.DataTypeCode" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+                <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Saving...
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

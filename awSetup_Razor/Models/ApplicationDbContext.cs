@@ -25,6 +25,10 @@ namespace awSetup_Razor.Models
         public virtual DbSet<ScriptTags> ScriptTags { get; set; }
         public virtual DbSet<ScriptActions> ScriptActions { get; set; }
         public virtual DbSet<Scripts> Scripts { get; set; }
+        public virtual DbSet<DataFiles> DataFiles { get; set; }
+        public virtual DbSet<DataRows> DataRows { get; set; }
+        public virtual DbSet<DataValues> DataValues { get; set; }
+
 
         // Unable to generate entity type for table 'dbo.NoCall'. Please see the warning messages.
 
@@ -160,16 +164,14 @@ namespace awSetup_Razor.Models
 
             modelBuilder.Entity<ScriptTags>(entity =>
             {
-                entity.HasIndex(e => new { e.FormatString, e.QueueMapColumn, e.ScriptId, e.TagName })
-                    .HasName("IX_ScriptTags_ScriptID_TagName");
+                ////entity.HasIndex(e => new { e.FormatString, e.QueueMapColumn, e.ScriptId, e.TagName })
+                //    .HasName("IX_ScriptTags_ScriptID_TagName");
 
                 entity.Property(e => e.DataTypeCode).IsUnicode(false);
 
-                entity.Property(e => e.DeliveryTypeCode).IsUnicode(false);
-
                 entity.Property(e => e.FormatString).IsUnicode(false);
 
-                entity.Property(e => e.QueueMapColumn).IsUnicode(false);
+                entity.Property(e => e.QueueMapCode).IsUnicode(false);
 
                 entity.Property(e => e.TagName).IsUnicode(false);
 
@@ -211,6 +213,43 @@ namespace awSetup_Razor.Models
                     .HasForeignKey(d => d.MessageTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Scripts_MessageTypes");
+            });
+            modelBuilder.Entity<DataFiles>(entity =>
+            {
+                entity.HasKey(e => e.DataFileId)
+                    .HasName("PK_Datafiles");
+
+                entity.HasIndex(e => new { e.CustomerId, e.MessageTypeId });
+
+                entity.Property(e => e.DataFileName).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<DataRows>(entity =>
+            {
+                entity.HasKey(e => e.DataRowId)
+                    .HasName("PK_Datarows");
+
+                entity.HasIndex(e => e.DataFileId);
+
+                entity.Property(e => e.DeliveryTypeCode).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                entity.Property(e => e.LanguageCode).IsUnicode(false);
+
+                entity.Property(e => e.Phone).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<DataValues>(entity =>
+            {
+                entity.HasKey(e => e.DataValueId)
+                    .HasName("PK_Datavalues");
+
+                entity.HasIndex(e => new { e.DataFileId, e.DataRowId });
+
+                entity.Property(e => e.ColumnName).IsUnicode(false);
+
+                entity.Property(e => e.ColumnValue).IsUnicode(false);
             });
         }
     }

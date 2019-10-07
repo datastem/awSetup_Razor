@@ -1,0 +1,57 @@
+﻿@model List<awSetup_Razor.Models.ScriptTags>
+
+<div class="row">
+    <div class="col-10 offset-1">
+
+        <table class="table" data-url="@Url.Page("ScriptTags", "ScriptTagsTableRefresh", new { scriptid = Model.FirstOrDefault().ScriptId })">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        TagName
+                    </th>
+                    <th>
+                        FormatString
+                    </th>
+                    <th>
+                        QueueMapCode
+                    </th>
+                    <th>
+                        Active
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scripttag"
+                               data-url="@Url.Page("ScriptTags", "ScriptTagsEdit", new {id = item.ScriptTagId })"
+                               title="Edit Tag"></a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TagName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FormatString)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QueueMapCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Active)
+                        </td>
+                        <td>
+                            <a class="btn fas fa-trash-alt" data-toggle="ajax-modal"
+                               data-target="#delete-scripttag"
+                               data-url="@Url.Page("ScriptTags", "ScriptTagsDelete", new {id = item.ScriptTagId })"
+                               title="Remove Tag"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+</div>

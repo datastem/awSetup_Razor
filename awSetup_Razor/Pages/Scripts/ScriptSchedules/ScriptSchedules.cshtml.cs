@@ -19,11 +19,9 @@ namespace awSetup_Razor.Pages.Scripts
         {
             _context = context;
         }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int scriptid)
         {
-            int? scriptid = HttpContext.Session.GetInt32("ScriptId");
-
-            ScriptSchedules = await _context.ScriptSchedules.Where(sch => sch.ScriptId == scriptid).OrderBy(s => s.Dow).ToListAsync();               
+            ScriptSchedules = await _context.ScriptSchedules.Where(sch => sch.ScriptId == scriptid).OrderBy(s => s.Dow).ToListAsync();
 
             if (ScriptSchedules == null)
             {

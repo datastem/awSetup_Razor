@@ -44,12 +44,12 @@ namespace awSetup_Razor.Pages.Scripts
             //        .FirstOrDefaultAsync();
             //}
 
-
+            /*
             HttpContext.Session.SetInt32("ScriptId", Scripts.ScriptId);
             HttpContext.Session.SetInt32("CustomerID", messagetype.CustomerId);
             HttpContext.Session.SetInt32("MessageTypeId", messagetype.MessageTypeId);
             HttpContext.Session.SetString("DeliveryTypeCode", deliverycode);
-
+            */
             return Page();
         }
 
@@ -62,11 +62,17 @@ namespace awSetup_Razor.Pages.Scripts
             {
                 return Page();
             }
+            EntityState st = _context.Entry(Scripts).State;
+            _context.Scripts.Attach(Scripts);
 
-            _context.Scripts.Add(Scripts);
+            if (_context.Entry(Scripts).State == EntityState.Modified)
+            {
+                var t = "Modified";
+            }
+
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

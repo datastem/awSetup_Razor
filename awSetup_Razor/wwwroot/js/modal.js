@@ -3,6 +3,7 @@
 
     $(document).on('click', '[data-toggle="ajax-modal"]', function (event) {
         var url = $(this).data('url');
+
         $.get(url).done(function (data) {
             placeholderElement.html(data);
             placeholderElement.find('[data-dismiss="modal"]').show();

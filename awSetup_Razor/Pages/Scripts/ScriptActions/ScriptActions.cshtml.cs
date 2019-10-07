@@ -25,30 +25,22 @@ namespace awSetup_Razor.Pages.Scripts
 
         [BindProperty]
         public List<Models.ScriptActions> ScriptActions { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int scriptid)
         {
-            int? scriptId = HttpContext.Session.GetInt32("ScriptId");
+            //int? scriptId = HttpContext.Session.GetInt32("ScriptId");
 
-            ScriptActions = await _context.ScriptActions.Where(sa => sa.ScriptId == scriptId).ToListAsync();
+            ScriptActions = await _context.ScriptActions.Where(sa => sa.ScriptId == scriptid).ToListAsync();
             return Page();
         }
 
-        public  PartialViewResult OnGetScriptActionsCreate(int scriptid)
+        public PartialViewResult OnGetScriptActionsCreate(int scriptid)
         {
             ActionEdit action = new ActionEdit();
             action.ScriptId = scriptid;
 
             action.Scriptaction = new Models.ScriptActions { ScriptId = scriptid };
 
-            action.AvailablecodesSL = (from c in _context.Codes
-                                       where c.Category == "VoiceAction"
-                                       && (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.ScriptId))
-                                       select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
-
-            action.AvailableresponsesSL = (from c in _context.Codes
-                                           where c.Category == "Keypad"
-                                           && (!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.ScriptId))
-                                           select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+            action = CreateSelectLists(action);
 
             return new PartialViewResult
             {
@@ -61,19 +53,7 @@ namespace awSetup_Razor.Pages.Scripts
             ActionEdit action = new ActionEdit();
             action.Scriptaction = await _context.ScriptActions.Where(s => s.ScriptActionId == id).FirstOrDefaultAsync();
 
-            action.AvailablecodesSL = (from c in _context.Codes
-                                       where c.Category == "VoiceAction"
-                                       && (
-                                             (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.Scriptaction.ScriptId))
-                                              || c.Code == action.Scriptaction.ActionCode  // get current selection
-                                              )
-                                       select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
-
-            action.AvailableresponsesSL = (from c in _context.Codes
-                                           where c.Category == "Keypad"
-                                           && ((!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.Scriptaction.ScriptId))
-                                           || c.Code == action.Scriptaction.Response)   // get current selection
-                                           select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+            action = EditSelectLists(action);
 
             return new PartialViewResult
             {
@@ -90,6 +70,8 @@ namespace awSetup_Razor.Pages.Scripts
                 await _context.SaveChangesAsync();
             }
 
+            action = CreateSelectLists(action);
+
             return new PartialViewResult
             {
                 ViewName = @".\Scripts\ScriptActions\ScriptActionsCreateModalPartial",
@@ -104,6 +86,8 @@ namespace awSetup_Razor.Pages.Scripts
                 _context.ScriptActions.Update(action.Scriptaction);
                 await _context.SaveChangesAsync();
             }
+
+            action = EditSelectLists(action);
 
             return new PartialViewResult
             {
@@ -158,5 +142,40 @@ namespace awSetup_Razor.Pages.Scripts
             };
             return pv;
         }
+
+        private ActionEdit CreateSelectLists(ActionEdit action)
+        {
+            action.AvailablecodesSL = (from c in _context.Codes
+                                       where c.Category == "VoiceAction"
+                                       && (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.ScriptId))
+                                       select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+
+            action.AvailableresponsesSL = (from c in _context.Codes
+                                           where c.Category == "Keypad"
+                                           && (!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.ScriptId))
+                                           select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+
+            return action;
+        }
+
+        private ActionEdit EditSelectLists(ActionEdit action)
+        {
+            action.AvailablecodesSL = (from c in _context.Codes
+                                       where c.Category == "VoiceAction"
+                                       && (
+                                             (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.Scriptaction.ScriptId))
+                                              || c.Code == action.Scriptaction.ActionCode  // get current selection
+                                              )
+                                       select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+
+            action.AvailableresponsesSL = (from c in _context.Codes
+                                           where c.Category == "Keypad"
+                                           && ((!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.Scriptaction.ScriptId))
+                                           || c.Code == action.Scriptaction.Response)   // get current selection
+                                           select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+
+            return action;
+        }
+
     }
 }

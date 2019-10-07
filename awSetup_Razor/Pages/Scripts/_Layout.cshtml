@@ -6,12 +6,28 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">ScriptEdit</a>
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link @ManageScriptPages.ScriptEditNavClass(ViewContext)" asp-page="/Scripts/ScriptEdit" 
-                                        asp-route-id="@Context.Session.GetInt32("MessageTypeId")"
-                                        asp-route-deliverycode="@Context.Session.GetString("DeliveryTypeCode")">Scripts</a></li>
-                <li class="nav-item"><a class="nav-link @ManageScriptPages.ScriptActionsNavClass(ViewContext)" asp-page="/Scripts/ScriptActions/ScriptActions">Actions</a></li>
-                <li class="nav-item"><a class="nav-link @ManageScriptPages.ScriptTagsNavClass(ViewContext)" asp-page="/Scripts/ScriptTags/ScriptTags">Tags</a></li>
-                <li class="nav-item"><a class="nav-link @ManageScriptPages.ScriptSchedulesNavClass(ViewContext)" asp-page="/Scripts/ScriptSchedules/ScriptSchedules">Schedules</a></li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageScriptPages.ScriptEditNavClass(ViewContext)"
+                       asp-page="/Scripts/ScriptEdit"
+                       asp-route-id="@Context.Session.GetInt32("MessageTypeId")"
+                       asp-route-deliverycode="@Context.Session.GetString("DeliveryTypeCode")">Scripts</a>
+                </li>
+                <li class="nav-item"><a class="nav-link @ManageScriptPages.ScriptActionsNavClass(ViewContext)"
+                                        asp-page="/Scripts/ScriptActions/ScriptActions"
+                                        asp-route-scriptid="@Context.Session.GetInt32("ScriptId")"
+                                        >Actions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageScriptPages.ScriptTagsNavClass(ViewContext)"
+                       asp-page="/Scripts/ScriptTags/ScriptTags"
+                       asp-route-scriptid="@Context.Session.GetInt32("ScriptId")"
+                       >Tags</a>
+                </li>
+
+                <li class="nav-item"><a class="nav-link @ManageScriptPages.ScriptSchedulesNavClass(ViewContext)" 
+                                        asp-page="/Scripts/ScriptSchedules/ScriptSchedules"
+                                        asp-route-scriptid="@Context.Session.GetInt32("ScriptId")"
+                                        >Schedules</a></li>
             </ul>
         </nav>
     </div>
