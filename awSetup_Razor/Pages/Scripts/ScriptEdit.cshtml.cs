@@ -28,8 +28,10 @@ namespace awSetup_Razor.Pages.Scripts
             Scripts = await _context.Scripts.Where(s => s.MessageTypeId == id && s.DeliveryTypeCode == deliverycode)
                 .FirstOrDefaultAsync();
 
-//            Scripts.ScriptSchedules = Scripts.ScriptSchedules.OrderBy(s => s.Dow).ToList();
-            
+            Scripts.OriginalScript = Scripts.MessageScript;
+
+            //            Scripts.ScriptSchedules = Scripts.ScriptSchedules.OrderBy(s => s.Dow).ToList();
+
             //TODO
             //if (Scripts == null)
             //{
@@ -62,8 +64,34 @@ namespace awSetup_Razor.Pages.Scripts
             {
                 return Page();
             }
-            EntityState st = _context.Entry(Scripts).State;
-            _context.Scripts.Attach(Scripts);
+
+            if (Scripts.MessageScript != Scripts.OriginalScript)
+            {
+                _context.Scripts.Attach(Scripts);
+                string[] newtags = Scripts.MessageScript.Split("[");
+                HashSet<string> NewTagSet = new HashSet<string>();
+                List<Models.ScriptTags> OriginalTags = _context.ScriptTags.Where(st => st.ScriptId == Scripts.ScriptId).ToList();
+                List<Models.ScriptTags> ReplaceTags = new List<Models.ScriptTags>();
+                foreach (var item in newtags)
+                {
+                    int p = item.IndexOf("]");
+                    if (p > 0)
+                    {
+                        NewTagSet.Add(item.Substring(0, p));
+                    }
+                }
+                foreach( var item in NewTagSet)
+                {
+                    if (OriginalTags.FindIndex(ot => ot.TagName == item.ToString()) >=0)
+                    {
+
+                        var t = "stop";
+
+                    }
+                }
+            }
+
+
 
             if (_context.Entry(Scripts).State == EntityState.Modified)
             {

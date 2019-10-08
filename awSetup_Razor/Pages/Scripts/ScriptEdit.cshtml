@@ -10,18 +10,19 @@
 <hr />
 <div class="row">
     <div class="col-md-4 offset-4">
-        <form method="post">
+        <form method="post" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Scripts.DeliveryTypeCode" class="form-control" hidden />
             <input asp-for="Scripts.MessagePrefix" class="form-control" hidden />
+            <input asp-for="Scripts.OriginalScript" class="form-control" hidden />
             <div class="form-group">
                 <label asp-for="Scripts.MessageTypeId" class="control-label"></label>:&nbsp;<B>@Model.Scripts.MessageTypeId</B>
                 @*<input asp-for="Scripts.MessageTypeId" class="form-control" />*@
             </div>
             @*<div class="form-group">
-                    <label asp-for="Scripts.LanguageCode" class="control-label"></label>
-                    <input asp-for="Scripts.LanguageCode" class="form-control" hidden/>
-                </div>*@
+            <label asp-for="Scripts.LanguageCode" class="control-label"></label>
+            <input asp-for="Scripts.LanguageCode" class="form-control" hidden/>
+        </div>*@
             <div class="form-group">
                 <label asp-for="Scripts.MessageScript" class="control-label"></label>
                 <textarea asp-for="Scripts.MessageScript" class="form-control" rows="6">@Model.Scripts.MessageScript</textarea>
@@ -40,7 +41,7 @@
                                 <input asp-for="Scripts.CallAttempts" class="form-control" />
                                 <span asp-validation-for="Scripts.CallAttempts" class="text-danger"></span>
                             </div>
-                        @*</div>
+                            @*</div>
                         <div class="row form-group">*@
                             <div class="col-2">
                                 <label asp-for="Scripts.RequeueDelay" class="control-label"></label>
@@ -51,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
             }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

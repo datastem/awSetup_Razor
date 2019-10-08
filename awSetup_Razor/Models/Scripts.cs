@@ -29,6 +29,9 @@ namespace awSetup_Razor.Models
 
         public string MessageScript { get; set; }
 
+        [NotMapped]
+        public string OriginalScript { get; set; }
+
         [StringLength(16)]
         public string MessagePrefix { get; set; }
 
