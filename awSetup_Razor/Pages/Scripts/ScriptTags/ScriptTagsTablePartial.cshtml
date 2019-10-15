@@ -2,7 +2,8 @@
 
 <div class="row">
     <div class="col-10 offset-1">
-
+        @Model.FirstOrDefault().ScriptId
+        </br>
         <table class="table" data-url="@Url.Page("ScriptTags", "ScriptTagsTableRefresh", new { scriptid = Model.FirstOrDefault().ScriptId })">
             <thead>
                 <tr>
@@ -11,13 +12,10 @@
                         TagName
                     </th>
                     <th>
-                        FormatString
+                        FormatCode
                     </th>
                     <th>
                         QueueMapCode
-                    </th>
-                    <th>
-                        Active
                     </th>
                     <th></th>
                 </tr>
@@ -35,13 +33,10 @@
                             @Html.DisplayFor(modelItem => item.TagName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.FormatString)
+                            @Html.DisplayFor(modelItem => item.FormatCode)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.QueueMapCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Active)
                         </td>
                         <td>
                             <a class="btn fas fa-trash-alt" data-toggle="ajax-modal"

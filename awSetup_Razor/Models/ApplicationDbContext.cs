@@ -164,12 +164,12 @@ namespace awSetup_Razor.Models
 
             modelBuilder.Entity<ScriptTags>(entity =>
             {
-                ////entity.HasIndex(e => new { e.FormatString, e.QueueMapColumn, e.ScriptId, e.TagName })
+                ////entity.HasIndex(e => new { e.FormatCode, e.QueueMapColumn, e.ScriptId, e.TagName })
                 //    .HasName("IX_ScriptTags_ScriptID_TagName");
 
                 entity.Property(e => e.DataTypeCode).IsUnicode(false);
 
-                entity.Property(e => e.FormatString).IsUnicode(false);
+                entity.Property(e => e.FormatCode).IsUnicode(false);
 
                 entity.Property(e => e.QueueMapCode).IsUnicode(false);
 

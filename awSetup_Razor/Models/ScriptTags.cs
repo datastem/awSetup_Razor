@@ -21,13 +21,12 @@ namespace awSetup_Razor.Models
 
         [StringLength(20)]
         [Display(Name = "Format")]
-        public string FormatString { get; set; }
+        public string FormatCode { get; set; }
 
         [StringLength(25)]
         [Display(Name = "Queue Map")]
         public string QueueMapCode { get; set; }
 
-        public bool Active { get; set; }
 
         [StringLength(1)]
         [Display(Name = "Data Type")]

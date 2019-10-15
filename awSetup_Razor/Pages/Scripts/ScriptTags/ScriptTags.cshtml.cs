@@ -26,7 +26,7 @@ namespace awSetup_Razor.Pages.Scripts
 
         public async Task OnGetAsync(int scriptid)
         { 
-            ScriptTags = await _context.ScriptTags.Where(st => st.ScriptId == scriptid).OrderBy(st => st.TagName).ToListAsync();
+            ScriptTags = await _context.ScriptTags.Where(st => st.ScriptId == scriptid ).OrderBy(st => st.TagName).ToListAsync();
         }
 
         public async Task<PartialViewResult> OnGetScriptTagsEdit(int? id)
@@ -86,9 +86,13 @@ namespace awSetup_Razor.Pages.Scripts
                               where c.Category == "DataType"
                               select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
 
-            tag.FormatSL = (from c in _context.Codes
-                            where c.Category == "DateFormat" || c.Category == "TimeFormat"
-                            select new SelectListItem { Value = c.Code, Text = c.Code == "h:mm xx" ? DateTime.Now.ToString("h:mm") + " in the morning" : DateTime.Now.ToString(c.Code) }).ToList();
+            tag.DateFormatSL = (from c in _context.Codes
+                                where c.Category == "DateFormat" 
+                                select new SelectListItem { Value = c.Code, Text = DateTime.Now.ToString(c.Code) }).ToList();
+
+            tag.TimeFormatSL = (from c in _context.Codes
+                                where c.Category == "TimeFormat"
+                                select new SelectListItem { Value = c.Code, Text = c.Code == "h:mm xx" ? DateTime.Now.ToString("h:mm") + " in the morning" : DateTime.Now.ToString(c.Code) }).ToList();
 
             return tag;
         }

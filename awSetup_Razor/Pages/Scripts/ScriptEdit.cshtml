@@ -10,11 +10,16 @@
 <hr />
 <div class="row">
     <div class="col-md-4 offset-4">
-        <form method="post" >
+        <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Scripts.DeliveryTypeCode" class="form-control" hidden />
             <input asp-for="Scripts.MessagePrefix" class="form-control" hidden />
-            <input asp-for="Scripts.OriginalScript" class="form-control" hidden />
+            <input asp-for="Scripts.MessageTypeId" class="form-control" hidden />
+            <input asp-for="Scripts.ScriptId" class="form-control" hidden />
+
+            <input asp-for="Scripts.IsActive" class="form-control" hidden />
+            <input asp-for="Scripts.ValidFrom" class="form-control" hidden />
+            <input asp-for="Scripts.ValidTo" class="form-control" hidden />
             <div class="form-group">
                 <label asp-for="Scripts.MessageTypeId" class="control-label"></label>:&nbsp;<B>@Model.Scripts.MessageTypeId</B>
                 @*<input asp-for="Scripts.MessageTypeId" class="form-control" />*@

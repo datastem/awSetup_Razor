@@ -18,33 +18,28 @@
                     <input type="hidden" asp-for="ScriptTag.ScriptTagId" />
                     <div class="form-group">
                         <label asp-for="ScriptTag.ScriptId" class="control-label"></label>
-                        <input asp-for="ScriptTag.ScriptId" class="form-control" />
+                        <input asp-for="ScriptTag.ScriptId" class="form-control" readonly/>
                         <span asp-validation-for="ScriptTag.ScriptId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ScriptTag.TagName" class="control-label"></label>
-                        <input asp-for="ScriptTag.TagName" class="form-control" />
+                        <input asp-for="ScriptTag.TagName" class="form-control" readonly />
                         <span asp-validation-for="ScriptTag.TagName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ScriptTag.FormatString" class="control-label"></label>
-                        <select asp-for="ScriptTag.FormatString" class="form-control" asp-items="@Model.FormatSL"></select>
-                        <span asp-validation-for="ScriptTag.FormatString" class="text-danger"></span>
+                        <label asp-for="ScriptTag.DataTypeCode" class="control-label"></label>
+                        <select asp-for="ScriptTag.DataTypeCode"  class="form-control" asp-items="@Model.DataTypeSL" onchange="UpdateFormatList()"></select>
+                        <span asp-validation-for="ScriptTag.DataTypeCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" id="FormatCodeGroup">
+                        <label asp-for="ScriptTag.FormatCode" class="control-label"></label>
+                        <select asp-for="ScriptTag.FormatCode" class="form-control" asp-items="@(Model.ScriptTag.DataTypeCode == "D" ? Model.DateFormatSL:Model.ScriptTag.DataTypeCode == "T" ? Model.TimeFormatSL : null)"></select>
+                        <span asp-validation-for="ScriptTag.FormatCode" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ScriptTag.QueueMapCode" class="control-label"></label>
                         <select asp-for="ScriptTag.QueueMapCode" class="form-control" asp-items="@Model.QueueMapSL"></select>
                         <span asp-validation-for="ScriptTag.QueueMapCode" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="ScriptTag.Active" /> @Html.DisplayNameFor(model => model.ScriptTag.Active)
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ScriptTag.DataTypeCode" class="control-label"></label>
-                        <select asp-for="ScriptTag.DataTypeCode" class="form-control" asp-items="@Model.DataTypeSL"></select>
-                        <span asp-validation-for="ScriptTag.DataTypeCode" class="text-danger"></span>
                     </div>
                 </form>
             </div>

@@ -29,14 +29,18 @@ namespace awSetup_Razor.Models
 
         public string MessageScript { get; set; }
 
-        [NotMapped]
-        public string OriginalScript { get; set; }
-
         [StringLength(16)]
         public string MessagePrefix { get; set; }
 
         public int? CallAttempts { get; set; }
         public int? RequeueDelay { get; set; }
+
+        public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime ValidFrom { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? ValidTo { get; set; }
 
         [ForeignKey("MessageTypeId")]
         [InverseProperty("Scripts")]
