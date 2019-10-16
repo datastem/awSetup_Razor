@@ -97,5 +97,24 @@ namespace awSetup_Razor.Pages.Scripts
             return tag;
         }
 
+        public JsonResult OnGetFormatCodes(string datatypecode)
+        {
+            var codes = new List<SelectListItem>();
+            switch(datatypecode)
+            {
+                case "D":
+                    codes = (from c in _context.Codes
+                             where c.Category == "DateFormat"
+                             select new SelectListItem { Value = c.Code, Text = DateTime.Now.ToString(c.Code) }).ToList();
+                    break;
+                case "T":
+                    codes = (from c in _context.Codes
+                             where c.Category == "TimeFormat"
+                             select new SelectListItem { Value = c.Code, Text = c.Code == "" ? c.Label : c.Code == "h:mm xx" ? DateTime.Now.ToString("h:mm") + " in the morning" : DateTime.Now.ToString(c.Code) }).ToList();
+                    break;
+
+            }
+            return new JsonResult(codes);
+        }
     }
 }

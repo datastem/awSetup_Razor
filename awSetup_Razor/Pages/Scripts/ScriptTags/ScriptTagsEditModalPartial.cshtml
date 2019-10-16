@@ -18,7 +18,7 @@
                     <input type="hidden" asp-for="ScriptTag.ScriptTagId" />
                     <div class="form-group">
                         <label asp-for="ScriptTag.ScriptId" class="control-label"></label>
-                        <input asp-for="ScriptTag.ScriptId" class="form-control" readonly/>
+                        <input asp-for="ScriptTag.ScriptId" class="form-control" readonly />
                         <span asp-validation-for="ScriptTag.ScriptId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -28,7 +28,8 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="ScriptTag.DataTypeCode" class="control-label"></label>
-                        <select asp-for="ScriptTag.DataTypeCode"  class="form-control" asp-items="@Model.DataTypeSL" onchange="UpdateFormatList()"></select>
+                        @*TODO: Setup onchange event and specific js function*@
+                        <select asp-for="ScriptTag.DataTypeCode" class="form-control" asp-items="@Model.DataTypeSL" onchange="$.changeFormatList()"></select>
                         <span asp-validation-for="ScriptTag.DataTypeCode" class="text-danger"></span>
                     </div>
                     <div class="form-group" id="FormatCodeGroup">
@@ -54,7 +55,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
