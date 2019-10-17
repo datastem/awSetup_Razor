@@ -5,7 +5,7 @@
     //$("#SubCategoryId").append("<option value=''>Select SubCategory</option>");
     $.getJSON('?handler=FormatCodes&datatypecode=' + datatypecode, (data) => {
         $.each(data, function (i, item) {
-            $("#ScriptTag_FormatCode").append('<option value="'+ item.Value + '">' + item.Text + '</option>');
+            $("#ScriptTag_FormatCode").append('<option value="'+ item.value + '">' + item.text + '</option>');
         });
     });
     //});
