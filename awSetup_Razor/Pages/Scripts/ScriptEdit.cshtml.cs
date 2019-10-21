@@ -25,7 +25,7 @@ namespace awSetup_Razor.Pages.Scripts
             Models.MessageTypes messagetype = _context.MessageTypes.FirstOrDefault(m => m.MessageTypeId == id);
             ViewData["messagetype"] = messagetype.MessageLabel;
 
-            Scripts = await _context.Scripts.Where(s => s.MessageTypeId == id && s.DeliveryTypeCode == deliverycode && s.IsActive == true)
+            Scripts = await _context.Scripts.Where(s => s.MessageTypeId == id && s.DeliveryTypeCode == deliverycode)
                 .FirstOrDefaultAsync();
 
 
@@ -64,85 +64,49 @@ namespace awSetup_Razor.Pages.Scripts
                 return Page();
             }
 
-            var context = new ApplicationDbContext();
-            Models.Scripts OriginalScript = context.Scripts.Where(s => s.ScriptId == Scripts.ScriptId && s.IsActive == true).FirstOrDefault();
-            int newscriptid = -1;
-            if (Scripts.MessageScript != OriginalScript.MessageScript)
+            _context.Scripts.Update(Scripts);
+
+            string[] newtags = Scripts.MessageScript.Split("[");
+            HashSet<string> NewTagSet = new HashSet<string>();
+            List<Models.ScriptTags> OriginalTags = _context.ScriptTags.Where(st => st.ScriptId == Scripts.ScriptId).ToList();
+            foreach (var item in newtags)
             {
-                OriginalScript.IsActive = false;
-                OriginalScript.ValidTo = DateTime.Now;
-                _context.Scripts.Update(OriginalScript);
-
-                Models.Scripts modifiedscript = new Models.Scripts()
+                int p = item.IndexOf("]");
+                if (p > 0)
                 {
-                    CallAttempts = Scripts.CallAttempts,
-                    DeliveryTypeCode = Scripts.DeliveryTypeCode,
-                    IsActive = Scripts.IsActive,
-                    MessageScript = Scripts.MessageScript,
-                    MessageType = Scripts.MessageType,
-                    MessageTypeId = Scripts.MessageTypeId,
-                    RequeueDelay = Scripts.RequeueDelay,
-                    ValidFrom = Scripts.ValidFrom,
-                    ValidTo = Scripts.ValidTo
-                };
-
-                _context.Scripts.Add(modifiedscript);
-                await _context.SaveChangesAsync();
-
-                /*working to here*/
-
-                newscriptid = modifiedscript.ScriptId;
-
-                string[] newtags = Scripts.MessageScript.Split("[");
-                HashSet<string> NewTagSet = new HashSet<string>();
-                List<Models.ScriptTags> OriginalTags = _context.ScriptTags.Where(st => st.ScriptId == OriginalScript.ScriptId).ToList();
-                List<Models.ScriptTags> ReplaceTags = new List<Models.ScriptTags>();  // diference in the tag
-                foreach (var item in newtags)
-                {
-                    int p = item.IndexOf("]");
-                    if (p > 0)
-                    {
-                        NewTagSet.Add(item.Substring(0, p));
-                    }
+                    NewTagSet.Add(item.Substring(0, p));
                 }
-                foreach (var item in NewTagSet)
-                {
-                    Models.ScriptTags originaltag = OriginalTags.Where(ot => ot.TagName == item.ToString()).FirstOrDefault();
-
-                    if (originaltag != null)
-                    {
-                        ReplaceTags.Add(new Models.ScriptTags
-                        {
-                            FormatCode = originaltag.FormatCode,
-                            QueueMapCode = originaltag.QueueMapCode,
-                            DataTypeCode = (item.ToUpper().Contains("DATE")? "D" : item.ToUpper().Contains("TIME") ? "T" : ""),  
-                            ScriptId = newscriptid,
-                            TagName = item
-                        });
-                    }
-                    else
-                    {
-                        ReplaceTags.Add(new Models.ScriptTags
-                        {
-                            DataTypeCode = (item.ToUpper().Contains("DATE") ? "D" : item.ToUpper().Contains("TIME") ? "T" : ""),
-                            ScriptId = newscriptid,
-                            TagName = item
-                        });
-
-                    }
-                }
-                _context.ScriptTags.AddRange(ReplaceTags);
             }
-            else
+
+            List<Models.ScriptTags> NewTags = new List<Models.ScriptTags>();
+            foreach (var item in NewTagSet)
             {
-                _context.Scripts.Update(Scripts);
+                Models.ScriptTags originaltag = OriginalTags.Where(ot => ot.TagName == item.ToString()).FirstOrDefault();
+
+                if (originaltag == null)   //new tag
+                {
+                    NewTags.Add(new Models.ScriptTags
+                    {
+                        ScriptId = Scripts.ScriptId,
+                        TagName = item,
+                        DataTypeCode = (item.ToUpper().Contains("DATE") ? "D" : item.ToUpper().Contains("TIME") ? "T" : "")
+                    });
+                }
             }
+            _context.ScriptTags.AddRange(NewTags);
+
+            List<Models.ScriptTags> RemoveTags = new List<Models.ScriptTags>();
+            foreach (var item in OriginalTags)
+            {
+                if (!NewTagSet.Contains(item.TagName))
+                {
+                    RemoveTags.Add(item);
+                }
+            }
+            _context.ScriptTags.RemoveRange(RemoveTags);
 
             await _context.SaveChangesAsync();
-            if (newscriptid > 0)
-            {
-                HttpContext.Session.SetInt32("ScriptId", newscriptid);
-            }
+
             return Page();
         }
     }

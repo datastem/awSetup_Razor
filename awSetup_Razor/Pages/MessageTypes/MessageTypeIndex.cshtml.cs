@@ -31,7 +31,7 @@ namespace awSetup_Razor.Pages.MessageTypes
             Models.MessageTypes messagetype = _context.MessageTypes.FirstOrDefault(m => m.MessageTypeId == id);
             ViewData["messagetype"] = messagetype.MessageLabel;
 
-            Models.Scripts scr = await _context.Scripts.Where(s => s.MessageTypeId == id && s.DeliveryTypeCode == deliverycode && s.IsActive == true)
+            Models.Scripts scr = await _context.Scripts.Where(s => s.MessageTypeId == id && s.DeliveryTypeCode == deliverycode)
                 .FirstOrDefaultAsync();
 
             HttpContext.Session.SetInt32("ScriptId", scr.ScriptId);

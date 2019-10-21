@@ -6,6 +6,10 @@
     ViewData["ActivePage"] = ManageScriptPages.ScriptEdit;
 }
 
+@section Styles {
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+}
+
 <h1>Scripts</h1>
 <hr />
 <div class="row">
@@ -17,20 +21,29 @@
             <input asp-for="Scripts.MessageTypeId" class="form-control" hidden />
             <input asp-for="Scripts.ScriptId" class="form-control" hidden />
 
-            <input asp-for="Scripts.IsActive" class="form-control" hidden />
             <input asp-for="Scripts.ValidFrom" class="form-control" hidden />
             <input asp-for="Scripts.ValidTo" class="form-control" hidden />
+            <input asp-for="Scripts.MessageScript" class="form-control" hidden />
             <div class="form-group">
                 <label asp-for="Scripts.MessageTypeId" class="control-label"></label>:&nbsp;<B>@Model.Scripts.MessageTypeId</B>
                 @*<input asp-for="Scripts.MessageTypeId" class="form-control" />*@
             </div>
             @*<div class="form-group">
-            <label asp-for="Scripts.LanguageCode" class="control-label"></label>
-            <input asp-for="Scripts.LanguageCode" class="form-control" hidden/>
-        </div>*@
+                    <label asp-for="Scripts.LanguageCode" class="control-label"></label>
+                    <input asp-for="Scripts.LanguageCode" class="form-control" hidden/>
+                </div>*@
             <div class="form-group">
                 <label asp-for="Scripts.MessageScript" class="control-label"></label>
-                <textarea asp-for="Scripts.MessageScript" class="form-control" rows="6">@Model.Scripts.MessageScript</textarea>
+                @if (Model.Scripts.DeliveryTypeCode == "E")
+                {
+                    <div id="editor">
+                        @Model.Scripts.MessageScript
+                    </div>
+                }
+                else
+                {
+                    <textarea asp-for="Scripts.MessageScript" class="form-control" rows="6">@Model.Scripts.MessageScript</textarea>
+                }
                 <span asp-validation-for="Scripts.MessageScript" class="text-danger"></span>
             </div>
             @if (Model.Scripts.DeliveryTypeCode == "V")
@@ -47,7 +60,7 @@
                                 <span asp-validation-for="Scripts.CallAttempts" class="text-danger"></span>
                             </div>
                             @*</div>
-                        <div class="row form-group">*@
+                                <div class="row form-group">*@
                             <div class="col-2">
                                 <label asp-for="Scripts.RequeueDelay" class="control-label"></label>
                             </div>
@@ -71,5 +84,7 @@
 
 
 @section Scripts {
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="~/js/ScriptEdit.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

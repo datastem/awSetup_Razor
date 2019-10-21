@@ -35,12 +35,11 @@ namespace awSetup_Razor.Models
         public int? CallAttempts { get; set; }
         public int? RequeueDelay { get; set; }
 
-        public bool IsActive { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime ValidFrom { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? ValidTo { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime ValidFrom { get;}
+        
+        [Column(TypeName = "datetime2")]
+        public DateTime ValidTo { get;}
 
         [ForeignKey("MessageTypeId")]
         [InverseProperty("Scripts")]
