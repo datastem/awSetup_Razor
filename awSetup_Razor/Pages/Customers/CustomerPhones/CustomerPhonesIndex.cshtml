@@ -1,0 +1,10 @@
+﻿@page
+@model awSetup_Razor.Pages.Customers.CustomerPhones.CustomerPhonesIndexModel
+
+@{
+    ViewData["Title"] = "CustomerPhonesIndex";
+}
+
+<h1>CustomerPhonesIndex</h1>
+
+@await Html.PartialAsync("CustomerPhonesTablePartial",Model.CustomerPhones)

@@ -45,9 +45,6 @@ namespace awSetup_Razor.Models
         [StringLength(100)]
         public string BillingEmail { get; set; }
 
-        [StringLength(3)]
-        public string DefaultAreaCode { get; set; }
-
         [Column("FTPFolderPath")]
         [StringLength(255)]
         public string FtpfolderPath { get; set; }

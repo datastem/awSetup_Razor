@@ -1,0 +1,63 @@
+﻿@model List<awSetup_Razor.Models.CustomerPhones>
+@using Microsoft.AspNetCore.Http
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a class="btn fas fa-plus-square" data-toggle="ajax-modal" data-target="#create-customerphone"
+                   data-url="@Url.Page("CustomerPhones", "CustomerPhonesCreate", new {id =  Context.Session.GetInt32("CustomerId")})"
+                   title="Add Action"></a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].CustomerCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].TwilioPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ForwardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].UnhandledMessage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-customerphone"
+                       data-url="@Url.Page("CustomerPhones", "CustomerPhonesEdit", new {id = item.CustomerPhoneId })"
+                       title="Edit"></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TwilioPhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ForwardNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnhandledMessage)
+                </td>
+                <td>
+                    <a class="btn fas fa-trash-alt" data-toggle="ajax-modal"
+                       data-target="#delete-customerphone"
+                       data-url="@Url.Page("CustomerPhones", "CustomerPhonesDelete", new {id = item.CustomerPhoneId })"
+                       title="Delete"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

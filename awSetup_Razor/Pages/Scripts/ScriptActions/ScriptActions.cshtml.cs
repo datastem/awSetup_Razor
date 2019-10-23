@@ -145,34 +145,61 @@ namespace awSetup_Razor.Pages.Scripts
 
         private ActionEdit CreateSelectLists(ActionEdit action)
         {
-            action.AvailablecodesSL = (from c in _context.Codes
-                                       where c.Category == "VoiceAction"
-                                       && (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.ScriptId))
-                                       select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+            string dtc = HttpContext.Session.GetString("DeliveryTypeCode");
 
-            action.AvailableresponsesSL = (from c in _context.Codes
-                                           where c.Category == "Keypad"
-                                           && (!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.ScriptId))
-                                           select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+            switch (HttpContext.Session.GetString("DeliveryTypeCode"))
+            {
+                case "V":
+                    action.AvailablecodesSL = (from c in _context.Codes
+                                               where c.Category == "VoiceAction"
+                                               && (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.ScriptId))
+                                               select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+
+                    action.AvailableresponsesSL = (from c in _context.Codes
+                                                   where c.Category == "Keypad"
+                                                   && (!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.ScriptId))
+                                                   select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+                    break;
+                case "T":
+                    action.AvailablecodesSL = (from c in _context.Codes
+                                               where c.Category == "SmsAction"
+                                               && (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.ScriptId))
+                                               select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+                    break;
+            }
 
             return action;
         }
 
         private ActionEdit EditSelectLists(ActionEdit action)
         {
-            action.AvailablecodesSL = (from c in _context.Codes
-                                       where c.Category == "VoiceAction"
-                                       && (
-                                             (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.Scriptaction.ScriptId))
-                                              || c.Code == action.Scriptaction.ActionCode  // get current selection
-                                              )
-                                       select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+            switch (HttpContext.Session.GetString("DeliveryTypeCode"))
+            {
+                case "V":
+                    action.AvailablecodesSL = (from c in _context.Codes
+                                               where c.Category == "VoiceAction"
+                                               && (
+                                                     (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.Scriptaction.ScriptId))
+                                                      || c.Code == action.Scriptaction.ActionCode  // get current selection
+                                                      )
+                                               select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
 
-            action.AvailableresponsesSL = (from c in _context.Codes
-                                           where c.Category == "Keypad"
-                                           && ((!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.Scriptaction.ScriptId))
-                                           || c.Code == action.Scriptaction.Response)   // get current selection
-                                           select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+                    action.AvailableresponsesSL = (from c in _context.Codes
+                                                   where c.Category == "Keypad"
+                                                   && ((!_context.ScriptActions.Any(sa => c.Code == sa.Response && sa.ScriptId == action.Scriptaction.ScriptId))
+                                                   || c.Code == action.Scriptaction.Response)   // get current selection
+                                                   select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+                    break;
+                case "T":
+                    action.AvailablecodesSL = (from c in _context.Codes
+                                               where c.Category == "SmsAction"
+                                               && (
+                                                     (!_context.ScriptActions.Any(sa => c.Code == sa.ActionCode && sa.ScriptId == action.Scriptaction.ScriptId))
+                                                      || c.Code == action.Scriptaction.ActionCode  // get current selection
+                                                      )
+                                               select new SelectListItem { Value = c.Code, Text = c.Label }).ToList();
+                    break;
+            }
 
             return action;
         }

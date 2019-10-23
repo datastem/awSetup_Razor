@@ -36,3 +36,15 @@ function VoiceScheduleCopy(defaultStartTime, defaultEndTime) {
         }
     }
 }
+
+function ScheduleCopy(defaultStartTime) {
+    for (i = 0; i < 7; i++) {
+        var prefix = "ScriptSchedules_" + i.toString();
+        var valid = document.getElementById(prefix + "__IsActive");
+        var isactive = document.getElementById(prefix + "__IsActive").checked;
+        if (isactive) {
+            var starttimeobj = document.getElementById(prefix + "__StartTime");
+            starttimeobj.value = defaultStartTime;
+        }
+    }
+}

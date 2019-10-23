@@ -1,4 +1,5 @@
 ﻿@page
+@{ Layout = "/Pages/Shared/_Layout.cshtml";}
 @model awSetup_Razor.Pages.Customers.IndexModel
 
 <h4>Customers</h4>
@@ -17,17 +18,17 @@
                 @Html.DisplayNameFor(model => model.Customers[0].CustomerCode)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Customers[0].TimeZoneOffset)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Customers[0].TimeZoneOffset)
+                </th>*@
             @*<th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingContact)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingAddress1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingAddress2)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Customers[0].BillingContact)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customers[0].BillingAddress1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customers[0].BillingAddress2)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Customers[0].BillingCity)
             </th>
@@ -35,17 +36,17 @@
                 @Html.DisplayNameFor(model => model.Customers[0].BillingState)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingZip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].DefaultAreaCode)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Customers[0].BillingZip)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customers[0].BillingPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customers[0].BillingEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customers[0].DefaultAreaCode)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Customers[0].FtpfolderPath)
             </th>
@@ -56,17 +57,17 @@
                 @Html.DisplayNameFor(model => model.Customers[0].Ftppassword)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Customers[0].SendGridApikey)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].EmailAddress)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Customers[0].SendGridApikey)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customers[0].EmailAddress)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Customers[0].TwilioAccountSid)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Customers[0].TwilioAuthToken)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Customers[0].TwilioAuthToken)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Customers[0].Active)
             </th>
@@ -76,74 +77,74 @@
     <tbody>
         @foreach (var item in Model.Customers)
         {
-        <tr>
-            <td><a asp-page="../MessageTypes/MessageTypeIndex" asp-route-customerid="@item.CustomerId"><i class="fas fa-scroll"></i></a></td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerCode)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.TimeZoneOffset)
-            </td>*@
-            @*<td>
-            @Html.DisplayFor(modelItem => item.BillingContact)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillingAddress1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillingAddress2)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.BillingCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BillingState)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.BillingZip)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillingPhone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillingEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DefaultAreaCode)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.FtpfolderPath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FtpuserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ftppassword)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.SendGridApikey)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailAddress)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.TwilioAccountSid)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.TwilioAuthToken)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                <a asp-page="./CustomerEdit" asp-route-id="@item.CustomerId"><i class="far fa-edit"></i></a> |
-                <a asp-page="./CustomerDetails" asp-route-id="@item.CustomerId"><i class="far fa-eye"></i></a> |
-                <a asp-page="./CustomerDelete" asp-route-id="@item.CustomerId"><i class="far fa-trash-alt"></i></a>
-            </td>
-        </tr>
+            <tr>
+                <td><a asp-page="../MessageTypes/MessageTypeIndex" asp-route-customerid="@item.CustomerId"><i class="fas fa-scroll"></i></a></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerCode)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.TimeZoneOffset)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.BillingContact)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillingAddress1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillingAddress2)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillingCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillingState)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.BillingZip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillingPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillingEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DefaultAreaCode)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.FtpfolderPath)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FtpuserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ftppassword)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.SendGridApikey)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.TwilioAccountSid)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.TwilioAuthToken)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                    <a asp-page="./CustomerEdit" asp-route-id="@item.CustomerId"><i class="far fa-edit"></i></a> |
+                    <a asp-page="./CustomerDetails" asp-route-id="@item.CustomerId"><i class="far fa-eye"></i></a> |
+                    <a asp-page="./CustomerDelete" asp-route-id="@item.CustomerId"><i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

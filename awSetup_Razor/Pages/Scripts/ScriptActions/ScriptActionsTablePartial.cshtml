@@ -12,7 +12,14 @@
                            title="Add Action"></a>
                     </th>
                     <th>
-                        <b>Key Pressed</b>
+                        @if (Context.Session.GetString("DeliveryTypeCode") == "V")
+                        {
+                            <b>Key Pressed</b>
+                        }
+                        else
+                        {
+                            <b>Reply Expected</b>
+                        }
                     </th>
                     <th>
                         <b>Action Code</b>
@@ -20,12 +27,15 @@
                     <th>
                         <b>Response Text</b>
                     </th>
-                    <th>
-                        <b>Dial Number</b>
-                    </th>
-                    <th>
-                        <b>Dial Tag</b> &nbsp;(Column in csv file)
-                    </th>
+                    @if (Context.Session.GetString("DeliveryTypeCode") == "V")
+                    {
+                        <th>
+                            <b>Dial Number</b>
+                        </th>
+                        <th>
+                            <b>Dial Tag</b> &nbsp;(Column in csv file)
+                        </th>
+                    }
                     <th>
                     </th>
             </thead>
@@ -47,12 +57,15 @@
                         <td>
                             @item.ReplyText
                         </td>
-                        <td>
-                            @item.Dial
-                        </td>
-                        <td>
-                            @item.DialTag
-                        </td>
+                        @if (Context.Session.GetString("DeliveryTypeCode") == "V")
+                        {
+                            <td>
+                                @item.Dial
+                            </td>
+                            <td>
+                                @item.DialTag
+                            </td>
+                        }
                         <td>
                             <a class="btn fas fa-trash-alt" data-toggle="ajax-modal"
                                data-target="#delete-scriptaction"

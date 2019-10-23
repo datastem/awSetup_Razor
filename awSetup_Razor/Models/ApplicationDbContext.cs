@@ -117,8 +117,6 @@ namespace awSetup_Razor.Models
 
                 entity.Property(e => e.CustomerName).IsUnicode(false);
 
-                entity.Property(e => e.DefaultAreaCode).IsUnicode(false);
-
                 entity.Property(e => e.EmailAddress).IsUnicode(false);
 
                 entity.Property(e => e.FtpfolderPath).IsUnicode(false);
