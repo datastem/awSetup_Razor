@@ -1,6 +1,6 @@
-﻿@model awSetup_Razor.Models.CustomerPhones
+﻿@model awSetup_Razor.Models.ViewModels.TwilioPhoneEdit
 
-<div class="modal fade" id="create-scriptaction" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="create-customerphones" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,25 +14,25 @@
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="CustomerId" class="control-label">@Model.CustomerId</label>
+                        <label asp-for="CustomerPhone.CustomerId" class="control-label">@Model.CustomerPhone.CustomerId</label>
                     </div>
                     <div class="form-group">
-                        <label asp-for="CustomerCode" class="control-label">@Model.CustomerCode</label>
+                        <label asp-for="CustomerPhone.CustomerCode" class="control-label">@Model.CustomerPhone.CustomerCode</label>
                     </div>
                     <div class="form-group">
-                        <label asp-for="TwilioPhoneNumber" class="control-label"></label>
-                        <input asp-for="TwilioPhoneNumber" class="form-control" />
-                        <span asp-validation-for="TwilioPhoneNumber" class="text-danger"></span>
+                        <label asp-for="CustomerPhone.TwilioPhoneNumber" class="control-label"></label>
+                        <select asp-for="CustomerPhone.TwilioPhoneNumber" class="form-control" asp-items="@Model.AvailableNumbersSL"></select>
+                        <span asp-validation-for="CustomerPhone.TwilioPhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ForwardNumber" class="control-label"></label>
-                        <input asp-for="ForwardNumber" class="form-control" />
-                        <span asp-validation-for="ForwardNumber" class="text-danger"></span>
+                        <label asp-for="CustomerPhone.ForwardNumber" class="control-label"></label>
+                        <input asp-for="CustomerPhone.ForwardNumber" class="form-control" />
+                        <span asp-validation-for="CustomerPhone.ForwardNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="UnhandledMessage" class="control-label"></label>
-                        <textarea asp-for="UnhandledMessage" class="form-control" rows="3"></textarea>
-                        <span asp-validation-for="UnhandledMessage" class="text-danger"></span>
+                        <label asp-for="CustomerPhone.UnhandledMessage" class="control-label"></label>
+                        <textarea asp-for="CustomerPhone.UnhandledMessage" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="CustomerPhone.UnhandledMessage" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />

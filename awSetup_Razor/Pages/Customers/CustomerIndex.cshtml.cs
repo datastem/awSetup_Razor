@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,5 +22,12 @@ namespace awSetup_Razor.Pages.Customers
         {
             Customers = await _context.Customers.ToListAsync();
         }
+
+        public IActionResult OnGetLauncher(int id)
+        {
+            HttpContext.Session.SetInt32("CustomerId", id);
+            return RedirectToPage("/Customers/CustomerEdit", new { id = id});
+        }
+
     }
 }

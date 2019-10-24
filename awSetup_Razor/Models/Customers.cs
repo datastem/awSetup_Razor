@@ -19,31 +19,11 @@ namespace awSetup_Razor.Models
         [StringLength(10)]
         public string CustomerCode { get; set; }
 
-        public int TimeZoneOffset { get; set; }
-
-        [StringLength(50)]
-        public string BillingContact { get; set; }
-
-        [StringLength(100)]
-        public string BillingAddress1 { get; set; }
-
-        [StringLength(100)]
-        public string BillingAddress2 { get; set; }
-
-        [StringLength(50)]
-        public string BillingCity { get; set; }
-
-        [StringLength(2)]
-        public string BillingState { get; set; }
-
-        [StringLength(5)]
-        public string BillingZip { get; set; }
-
+        [Required]
         [StringLength(10)]
-        public string BillingPhone { get; set; }
+        public string PrimaryPhone { get; set; }
 
-        [StringLength(100)]
-        public string BillingEmail { get; set; }
+        public int TimeZoneOffset { get; set; }
 
         [Column("FTPFolderPath")]
         [StringLength(255)]

@@ -17,35 +17,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Customers[0].CustomerCode)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers[0].PrimaryPhone)
+            </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.Customers[0].TimeZoneOffset)
-                </th>*@
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Customers[0].BillingContact)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customers[0].BillingAddress1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customers[0].BillingAddress2)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingCity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].BillingState)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Customers[0].BillingZip)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customers[0].BillingPhone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customers[0].BillingEmail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customers[0].DefaultAreaCode)
                 </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Customers[0].FtpfolderPath)
@@ -85,35 +61,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CustomerCode)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrimaryPhone)
+                </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.TimeZoneOffset)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.BillingContact)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BillingAddress1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BillingAddress2)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.BillingCity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BillingState)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.BillingZip)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BillingPhone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BillingEmail)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DefaultAreaCode)
                     </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.FtpfolderPath)
@@ -140,8 +92,7 @@
                     @Html.DisplayFor(modelItem => item.Active)
                 </td>
                 <td>
-                    <a asp-page="./CustomerEdit" asp-route-id="@item.CustomerId"><i class="far fa-edit"></i></a> |
-                    <a asp-page="./CustomerDetails" asp-route-id="@item.CustomerId"><i class="far fa-eye"></i></a> |
+                    <a asp-page-handler="Launcher" asp-route-id="@item.CustomerId"><i class="far fa-edit"></i></a>
                     <a asp-page="./CustomerDelete" asp-route-id="@item.CustomerId"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>

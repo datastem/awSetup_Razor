@@ -97,21 +97,7 @@ namespace awSetup_Razor.Models
 
             modelBuilder.Entity<Customers>(entity =>
             {
-                entity.Property(e => e.BillingAddress1).IsUnicode(false);
-
-                entity.Property(e => e.BillingAddress2).IsUnicode(false);
-
-                entity.Property(e => e.BillingCity).IsUnicode(false);
-
-                entity.Property(e => e.BillingContact).IsUnicode(false);
-
-                entity.Property(e => e.BillingEmail).IsUnicode(false);
-
-                entity.Property(e => e.BillingPhone).IsUnicode(false);
-
-                entity.Property(e => e.BillingState).IsUnicode(false);
-
-                entity.Property(e => e.BillingZip).IsUnicode(false);
+                entity.Property(e => e.PrimaryPhone).IsUnicode(false);
 
                 entity.Property(e => e.CustomerCode).IsUnicode(false);
 
