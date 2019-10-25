@@ -35,15 +35,13 @@ namespace awSetup_Razor.Pages.Customers.CustomerPhones
         {
             Models.Customers customer = _context.Customers.FirstOrDefault(c => c.CustomerId == id);
 
-            TwilioClient.Init(customer.TwilioAccountSid, customer.TwilioAuthToken);
-            //            ResourceSet<LocalResource> localAvailableNumbers = LocalResource.Read("US", nearLatLong: "29.568842, -97.964729", distance: 50);
-            ResourceSet<LocalResource> localAvailableNumbers = LocalResource.Read("US", nearNumber: customer.PrimaryPhone, distance: 10);
+            List<SelectListItem> phonelist = TwilioPhoneList(id, customer.PrimaryPhone, 10);
 
             TwilioPhoneEdit phone = new TwilioPhoneEdit
             {
                 CustomerPhone = new Models.CustomerPhones { CustomerId = id },
-                AvailableNumbersSL = (from c in localAvailableNumbers
-                                      select new SelectListItem { Value = c.PhoneNumber.ToString().Substring(2), Text = c.FriendlyName.ToString() }).ToList()
+                AvailableNumbersSL = phonelist,
+                PrimaryPhone = customer.PrimaryPhone
             };
 
             return new PartialViewResult
@@ -63,5 +61,22 @@ namespace awSetup_Razor.Pages.Customers.CustomerPhones
             };
         }
 
+        public JsonResult OnGetTwilioPhoneListRefresh(int customerid, string phone, int miles)
+        {
+            return new JsonResult(TwilioPhoneList(customerid,phone,miles));
+        }
+
+        private List<SelectListItem> TwilioPhoneList(int customerid, string phone, int miles)
+        {
+            Models.Customers customer = _context.Customers.FirstOrDefault(c => c.CustomerId == customerid);
+
+            phone = (string.IsNullOrEmpty(phone) ? "+1" + customer.PrimaryPhone : "+1" + phone);
+
+            TwilioClient.Init(customer.TwilioAccountSid, customer.TwilioAuthToken);
+            ResourceSet<LocalResource> localAvailableNumbers = LocalResource.Read("US", nearNumber: phone, distance: miles);
+
+            return (from c in localAvailableNumbers
+                             select new SelectListItem { Value = c.PhoneNumber.ToString().Substring(2), Text = c.FriendlyName.ToString() + " " + c.Locality }).ToList();
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace awSetup_Razor.Models.ViewModels
     {
         public CustomerPhones CustomerPhone { get; set; }
         public List<SelectListItem> AvailableNumbersSL { get; set; }
+        public string PrimaryPhone { get; set; }
+        public int Miles { get; set; }
     }
 }
