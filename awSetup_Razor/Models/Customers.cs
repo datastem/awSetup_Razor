@@ -25,21 +25,18 @@ namespace awSetup_Razor.Models
 
         public int TimeZoneOffset { get; set; }
 
-        [Column("FTPFolderPath")]
         [StringLength(255)]
-        public string FtpfolderPath { get; set; }
+        public string FTPFolderPath { get; set; }
 
-        [Column("FTPUserName")]
         [StringLength(24)]
-        public string FtpuserName { get; set; }
+        public string FTPUserName { get; set; }
 
-        [Column("FTPPassword")]
         [StringLength(32)]
-        public string Ftppassword { get; set; }
+        public string FTPPassword { get; set; }
 
         [Column("SendGridAPIKey")]
         [StringLength(100)]
-        public string SendGridApikey { get; set; }
+        public string SendGridApiKey { get; set; }
 
         [StringLength(100)]
         public string EmailAddress { get; set; }

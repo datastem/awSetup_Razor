@@ -28,6 +28,7 @@ namespace awSetup_Razor.Models
         public virtual DbSet<DataFiles> DataFiles { get; set; }
         public virtual DbSet<DataRows> DataRows { get; set; }
         public virtual DbSet<DataValues> DataValues { get; set; }
+        public virtual DbSet<Settings> Settings { get; set; }
 
 
         // Unable to generate entity type for table 'dbo.NoCall'. Please see the warning messages.
@@ -105,13 +106,13 @@ namespace awSetup_Razor.Models
 
                 entity.Property(e => e.EmailAddress).IsUnicode(false);
 
-                entity.Property(e => e.FtpfolderPath).IsUnicode(false);
+                entity.Property(e => e.FTPFolderPath).IsUnicode(false);
 
-                entity.Property(e => e.Ftppassword).IsUnicode(false);
+                entity.Property(e => e.FTPPassword).IsUnicode(false);
 
-                entity.Property(e => e.FtpuserName).IsUnicode(false);
+                entity.Property(e => e.FTPUserName).IsUnicode(false);
 
-                entity.Property(e => e.SendGridApikey).IsUnicode(false);
+                entity.Property(e => e.SendGridApiKey).IsUnicode(false);
 
                 entity.Property(e => e.TwilioAccountSid).IsUnicode(false);
 
@@ -232,6 +233,13 @@ namespace awSetup_Razor.Models
                 entity.Property(e => e.ColumnName).IsUnicode(false);
 
                 entity.Property(e => e.ColumnValue).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Settings>(entity =>
+            {
+                entity.Property(e => e.ItemName).IsUnicode(false);
+
+                entity.Property(e => e.ItemValue).IsUnicode(false);
             });
         }
     }

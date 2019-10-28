@@ -24,13 +24,13 @@
                     @Html.DisplayNameFor(model => model.Customers[0].TimeZoneOffset)
                 </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Customers[0].FtpfolderPath)
+                @Html.DisplayNameFor(model => model.Customers[0].FTPFolderPath)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customers[0].FtpuserName)
+                @Html.DisplayNameFor(model => model.Customers[0].FTPUserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customers[0].Ftppassword)
+                @Html.DisplayNameFor(model => model.Customers[0].FTPPassword)
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.Customers[0].SendGridApikey)
@@ -68,13 +68,13 @@
                         @Html.DisplayFor(modelItem => item.TimeZoneOffset)
                     </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.FtpfolderPath)
+                    @Html.DisplayFor(modelItem => item.FTPFolderPath)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FtpuserName)
+                    @Html.DisplayFor(modelItem => item.FTPUserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ftppassword)
+                    @Html.DisplayFor(modelItem => item.FTPPassword)
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.SendGridApikey)
@@ -93,6 +93,7 @@
                 </td>
                 <td>
                     <a asp-page-handler="Launcher" asp-route-id="@item.CustomerId"><i class="far fa-edit"></i></a>
+                    <a asp-page-handler="CreateFTPUser" asp-route-id="@item.CustomerId" title="Create FTP User Account"><i class="far fa-server"></i></a>
                     <a asp-page="./CustomerDelete" asp-route-id="@item.CustomerId"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>
