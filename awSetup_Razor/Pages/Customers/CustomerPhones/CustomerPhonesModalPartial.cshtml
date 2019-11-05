@@ -1,0 +1,83 @@
+﻿@model awSetup_Razor.Models.ViewModels.TwilioPhoneEdit
+
+<div class="modal fade" id="update-customerphones" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header @(Model.Action=="Delete"? "bg-danger" : null)">
+                <h5 class="modal-title" id="headerLabel">@(Model.Action) Customer Phone</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="CustomerPhonesUpdate">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <input type="hidden" asp-for="CustomerPhone.CustomerPhoneId" />
+                    <input type="hidden" asp-for="CustomerPhone.CustomerId" />
+                    <input type="hidden" asp-for="Action" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="CustomerPhone.CustomerId" class="control-label">@Model.CustomerPhone.CustomerId</label>
+                    </div>
+                    @if (Model.Action == "Create")
+                    {
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <label asp-for="PrimaryPhone" class="control-label"></label>
+                                <input asp-for="PrimaryPhone" class="form-control" />
+                                <span asp-validation-for="PrimaryPhone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label asp-for="Miles" class="control-label"></label>
+                                <select asp-for="Miles" class="form-control">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-3 mt-auto">
+                                <button type="button" onclick="TwilioPhoneListRefresh()" class="btn btn-info" title="Refresh phone list"><i class="fas fa-sync-alt"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CustomerPhone.TwilioPhoneNumber" class="control-label"></label>
+                            <select asp-for="CustomerPhone.TwilioPhoneNumber" class="form-control" asp-items="@Model.AvailableNumbersSL" size="10"></select>
+                            <span asp-validation-for="CustomerPhone.TwilioPhoneNumber" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                <div class="form-group">
+                    <label asp-for="CustomerPhone.TwilioPhoneNumber" class="control-label"></label>
+                    <input asp-for="CustomerPhone.TwilioPhoneNumber" class="form-control" readonly/>
+                    <span asp-validation-for="CustomerPhone.TwilioPhoneNumber" class="text-danger"></span>
+                </div>
+                    }
+                    <div class="form-group">
+                        <label asp-for="CustomerPhone.ForwardNumber" class="control-label"></label>
+                        <input asp-for="CustomerPhone.ForwardNumber" class="form-control" disabled="@(Model.Action=="Delete"? "disabled" : null)" />
+                        <span asp-validation-for="CustomerPhone.ForwardNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CustomerPhone.UnhandledMessage" class="control-label"></label>
+                        <textarea asp-for="CustomerPhone.UnhandledMessage" class="form-control" rows="3" disabled="@(Model.Action=="Delete"? "disabled" : null)"></textarea>
+                        <span asp-validation-for="CustomerPhone.UnhandledMessage" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">@(Model.Action == "Delete" ? "Delete" : "Save")</button>
+                <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    @(Model.Action == "Delete" ? "Deleting..." : "Saving...")
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

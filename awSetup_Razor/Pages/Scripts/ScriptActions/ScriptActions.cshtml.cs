@@ -33,6 +33,24 @@ namespace awSetup_Razor.Pages.Scripts
             return Page();
         }
 
+        public async Task<PartialViewResult> OnGetScriptActionsTableRefresh(int scriptid)
+        {
+            int? scriptId = HttpContext.Session.GetInt32("ScriptId");
+
+            ScriptActions = await _context.ScriptActions.Where(sa => sa.ScriptId == scriptId).ToListAsync();
+
+            PartialViewResult pv = new PartialViewResult
+            {
+                ViewName = @".\Scripts\ScriptActions\ScriptActionsTablePartial",
+                //ViewData = new ViewDataDictionary<ScriptActions>(ViewData, Scripts.ScriptActions)
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                {
+                    Model = ScriptActions
+                }
+            };
+            return pv;
+        }
+
         public PartialViewResult OnGetScriptActionsCreate(int scriptid)
         {
             ActionEdit action = new ActionEdit();
@@ -125,23 +143,6 @@ namespace awSetup_Razor.Pages.Scripts
             return pv;
         }
 
-        public async Task<PartialViewResult> OnGetScriptActionsTableRefresh(int scriptid)
-        {
-            int? scriptId = HttpContext.Session.GetInt32("ScriptId");
-
-            ScriptActions = await _context.ScriptActions.Where(sa => sa.ScriptId == scriptId).ToListAsync();
-
-            PartialViewResult pv = new PartialViewResult
-            {
-                ViewName = @".\Scripts\ScriptActions\ScriptActionsTablePartial",
-                //ViewData = new ViewDataDictionary<ScriptActions>(ViewData, Scripts.ScriptActions)
-                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
-                {
-                    Model = ScriptActions
-                }
-            };
-            return pv;
-        }
 
         private ActionEdit CreateSelectLists(ActionEdit action)
         {

@@ -49,5 +49,7 @@ namespace awSetup_Razor.Models
         public string TwilioAuthToken { get; set; }
 
         public bool Active { get; set; }
+
+        public bool IsMember { get; set; }
     }
 }

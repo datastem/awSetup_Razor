@@ -81,8 +81,6 @@ namespace awSetup_Razor.Models
 
             modelBuilder.Entity<CustomerPhones>(entity =>
             {
-                entity.Property(e => e.CustomerCode).IsUnicode(false);
-
                 entity.Property(e => e.ForwardNumber).IsUnicode(false);
 
                 entity.Property(e => e.TwilioPhoneNumber).IsUnicode(false);

@@ -34,6 +34,13 @@ namespace awSetup_Razor.Pages.Customers
             return RedirectToPage("/Customers/CustomerEdit", new { id = id });
         }
 
+        public async Task<IActionResult> OnGetCustomerCreate()
+        {
+            //TODO:  Create Customer Record
+            //TODO:  Create CustomerRate record
+            return Page();
+        }
+
         public async Task<IActionResult> OnGetCreateFTPUser(int id)
         {
             /*https://kimsereyblog.blogspot.com/2018/01/start-processes-from-c-in-dotnet-core.html
