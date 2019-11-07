@@ -2,101 +2,12 @@
 @{ Layout = "/Pages/Shared/_Layout.cshtml";}
 @model awSetup_Razor.Pages.Customers.IndexModel
 
+<div id="modal-placeholder"></div>
+
 <h4>Customers</h4>
 
-<p>
-    <a asp-page="Create"><i class="far fa-plus-square"></i></a>
-</p>
-<table class="table table-responsive">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].CustomerName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].CustomerCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].PrimaryPhone)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Customers[0].TimeZoneOffset)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].FTPFolderPath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].FTPUserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].FTPPassword)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Customers[0].SendGridApikey)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customers[0].EmailAddress)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].TwilioAccountSid)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Customers[0].TwilioAuthToken)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Customers[0].Active)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Customers)
-        {
-            <tr>
-                <td><a asp-page="../MessageTypes/MessageTypeIndex" asp-route-customerid="@item.CustomerId"><i class="fas fa-scroll"></i></a></td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrimaryPhone)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.TimeZoneOffset)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.FTPFolderPath)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FTPUserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FTPPassword)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.SendGridApikey)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EmailAddress)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.TwilioAccountSid)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.TwilioAuthToken)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Active)
-                </td>
-                <td>
-                    <a asp-page-handler="Launcher" asp-route-id="@item.CustomerId"><i class="far fa-edit"></i></a>
-                    <a asp-page-handler="CreateFTPUser" asp-route-id="@item.CustomerId" title="Create FTP User Account"><i class="fas fa-server"></i></a>
-                    <a asp-page="./CustomerDelete" asp-route-id="@item.CustomerId"><i class="far fa-trash-alt"></i></a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@await Html.PartialAsync("CustomersTablePartial", Model.Customers)
+
+@section Scripts {
+    <script src="~/js/modal.js"></script>
+}

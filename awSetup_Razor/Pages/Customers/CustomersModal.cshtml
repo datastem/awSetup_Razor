@@ -1,0 +1,56 @@
+﻿@model awSetup_Razor.Models.Customers
+
+<div class="modal fade" id="update-customers" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="headerLabel">@(Model.Action) Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="CustomersUpdate">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="CustomerName" class="control-label"></label>
+                        <input asp-for="CustomerName" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)" />
+                        <span asp-validation-for="CustomerName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CustomerCode" class="control-label"></label>
+                        <input asp-for="CustomerCode" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)" />
+                        <span asp-validation-for="CustomerCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PrimaryPhone" class="control-label"></label>
+                        <input asp-for="PrimaryPhone" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)" />
+                        <span asp-validation-for="PrimaryPhone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input asp-for="IsMember" class="custom-control-input" readonly="@(Model.Action=="Delete"? "readonly" : null)" />
+                            <label asp-for="IsMember" class="custom-control-label"></label>
+                        </div>
+                    </div>
+                    <input asp-for="CustomerId" hidden />
+                    <input asp-for="Active" hidden />
+                    <input asp-for="Action" hidden />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">@(Model.Action == "Delete" ? "Delete" : "Save")</button>
+                <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    @(Model.Action == "Delete" ? "Deleting..." : "Saving...")
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

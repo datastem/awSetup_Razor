@@ -29,6 +29,7 @@ namespace awSetup_Razor.Models
         public virtual DbSet<DataRows> DataRows { get; set; }
         public virtual DbSet<DataValues> DataValues { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
+        public virtual DbSet<MasterRates> MasterRates { get; set; }
 
 
         // Unable to generate entity type for table 'dbo.NoCall'. Please see the warning messages.
@@ -239,6 +240,8 @@ namespace awSetup_Razor.Models
 
                 entity.Property(e => e.ItemValue).IsUnicode(false);
             });
+
+            modelBuilder.Entity<MasterRates>();
         }
     }
 }

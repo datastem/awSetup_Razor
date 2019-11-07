@@ -23,6 +23,9 @@ namespace awSetup_Razor.Models
         [StringLength(10)]
         public string PrimaryPhone { get; set; }
 
+        [Required]
+        public bool IsMember { get; set; }
+
         public int TimeZoneOffset { get; set; }
 
         [StringLength(255)]
@@ -50,6 +53,7 @@ namespace awSetup_Razor.Models
 
         public bool Active { get; set; }
 
-        public bool IsMember { get; set; }
+        [NotMapped]
+        public string Action { get; set; }
     }
 }

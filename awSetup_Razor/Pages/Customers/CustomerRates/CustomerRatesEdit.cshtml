@@ -1,5 +1,5 @@
 ﻿@page
-@model awSetup_Razor.Pages.Customers.CustomerRates.CustomerRateEditModel
+@model awSetup_Razor.Pages.Customers.CustomerRates.CustomerRatesEditModel
 
 @{
     ViewData["Title"] = "CustomerRateEdit";
@@ -15,11 +15,7 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CustomerRates.CustomerRateId" />
-            <div class="form-group">
-                <label asp-for="CustomerRates.CustomerId" class="control-label"></label>
-                <input asp-for="CustomerRates.CustomerId" class="form-control" />
-                <span asp-validation-for="CustomerRates.CustomerId" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="CustomerRates.CustomerId"/>
             <div class="form-group">
                 <label asp-for="CustomerRates.EmailRate" class="control-label"></label>
                 <input asp-for="CustomerRates.EmailRate" class="form-control" />

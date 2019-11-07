@@ -1,0 +1,99 @@
+﻿@model List<awSetup_Razor.Models.Customers>
+
+<table class="table table-responsive" data-url="@Url.Page("CustomerIndex","TableRefresh")">
+    <thead>
+        <tr>
+            <th>
+                <a class="btn far fa-plus-square" data-toggle="ajax-modal" data-target="#update-customers"
+                   data-url="@Url.Page("CustomerIndex", "CustomerCreate")"
+                   title="Add Customer"></a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].CustomerCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].PrimaryPhone)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Customers[0].TimeZoneOffset)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model[0].FTPFolderPath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].FTPUserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].FTPPassword)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Customers[0].SendGridApikey)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customers[0].EmailAddress)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model[0].TwilioAccountSid)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Customers[0].TwilioAuthToken)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model[0].Active)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><a asp-page="../MessageTypes/MessageTypeIndex" asp-route-customerid="@item.CustomerId"><i class="fas fa-scroll"></i></a></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrimaryPhone)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.TimeZoneOffset)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.FTPFolderPath)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FTPUserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FTPPassword)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.SendGridApikey)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.TwilioAccountSid)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.TwilioAuthToken)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td>
+                    <a class="btn far fa-edit" asp-page-handler="CustomerEdit" asp-route-id="@item.CustomerId"></a>
+                    @*<a asp-page-handler="CreateFTPUser" asp-route-id="@item.CustomerId" title="Create FTP User Account"><i class="fas fa-server"></i></a>*@
+                    <a class="btn far fa-trash-alt" data-toggle="ajax-modal" data-target="#update-customers" data-url="@Url.Page("CustomerIndex", "CustomerDelete", new {id =  item.CustomerId})"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

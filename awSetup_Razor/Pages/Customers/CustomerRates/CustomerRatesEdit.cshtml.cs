@@ -10,11 +10,11 @@ using awSetup_Razor.Models;
 
 namespace awSetup_Razor.Pages.Customers.CustomerRates
 {
-    public class CustomerRateEditModel : PageModel
+    public class CustomerRatesEditModel : PageModel
     {
         private readonly Models.ApplicationDbContext _context;
 
-        public CustomerRateEditModel(Models.ApplicationDbContext context)
+        public CustomerRatesEditModel(Models.ApplicationDbContext context)
         {
             _context = context;
         }

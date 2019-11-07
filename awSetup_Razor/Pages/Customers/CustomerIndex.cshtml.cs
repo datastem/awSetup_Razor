@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,18 +30,112 @@ namespace awSetup_Razor.Pages.Customers
             Customers = await _context.Customers.ToListAsync();
         }
 
-        public IActionResult OnGetLauncher(int id)
+        public async Task<PartialViewResult> OnGetTableRefresh()
         {
-            HttpContext.Session.SetInt32("CustomerId", id);
-            return RedirectToPage("/Customers/CustomerEdit", new { id = id });
+            Customers = await _context.Customers.ToListAsync();
+
+            PartialViewResult pv = new PartialViewResult
+            {
+                ViewName = @".\Customers\CustomersTablePartial",
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                {
+                    Model = Customers
+                }
+            };
+            return pv;
         }
 
-        public async Task<IActionResult> OnGetCustomerCreate()
+        public PartialViewResult OnGetCustomerCreate()
         {
-            //TODO:  Create Customer Record
+            Models.Customers customer = new Models.Customers()
+            {
+                Action = "Create",
+                IsMember = false,
+                Active = true
+            };
+
+            return new PartialViewResult
+            {
+                ViewName = @".\Customers\CustomersModal",
+                ViewData = new ViewDataDictionary<Models.Customers>(ViewData, customer)
+            };
+
             //TODO:  Create CustomerRate record
-            return Page();
         }
+
+        public IActionResult OnGetCustomerEdit(int id)
+        {
+            HttpContext.Session.SetInt32("CustomerId", id);
+            return RedirectToPage("/Customers/CustomerEdit", new { id });
+        }
+
+        public async Task<PartialViewResult> OnGetCustomerDelete(int id)
+        {
+            Models.Customers customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
+            customer.Action = "Delete";
+
+            return new PartialViewResult
+            {
+                ViewName = @".\Customers\CustomersModal",
+                ViewData = new ViewDataDictionary<Models.Customers>(ViewData, customer)
+            };
+
+            //TODO:  Create CustomerRate record
+        }
+
+        public PartialViewResult OnPostCustomersUpdate(Models.Customers customer)
+        {
+            if (ModelState.IsValid)
+            {
+                switch (customer.Action)
+                {
+                    case "Create":
+                        string ftppath = _context.Settings.Where(s => s.ItemName == "FTPFolderPath").Select(s => s.ItemValue).Single();
+
+                        customer.FTPFolderPath = ftppath + customer.CustomerCode;
+                        customer.FTPUserName = customer.CustomerCode;
+                        customer.FTPPassword = GenerateRandomPassword();
+
+                        //TODO: Create Twilio Subaccount
+                        //TODO: Get SendGridAPIKey and populate, generate e-mail address
+                        
+
+                        _context.Customers.Add(customer);
+                        _context.SaveChanges();
+
+                        Models.MasterRates masterrate = _context.MasterRates.FirstOrDefault(mr => mr.IsMember == customer.IsMember);
+                        Models.CustomerRates rate = new Models.CustomerRates
+                        {
+                            CustomerId = customer.CustomerId,
+                            EmailRate = masterrate.EmailRate,
+                            TextRate = masterrate.TextRate,
+                            VoiceRate = masterrate.VoiceRate
+                        };
+                        _context.CustomerRates.Add(rate);
+
+
+                        break;
+                    case "Edit":
+                        //Not used here
+                        break;
+                    case "Delete":
+                        _context.Customers.Remove(customer);
+                        //TODO: Close Twilio Subaccount
+                        //TODO: Cancel Twilio Phone
+                        break;
+                }
+                _context.SaveChanges();
+            }
+
+            return new PartialViewResult
+            {
+                ViewName = @".\Customers\CustomersModal",
+                ViewData = new ViewDataDictionary<Models.Customers>(ViewData, customer)
+            };
+        }
+
+
+
 
         public async Task<IActionResult> OnGetCreateFTPUser(int id)
         {
