@@ -1,0 +1,79 @@
+﻿@model awSetup_Razor.Models.ViewModels.CustomerContactsEdit
+
+<div class="modal fade" id="update-customercontacts" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header @(Model.Action=="Delete"? "bg-danger" : null)">
+                <h5 class="modal-title" id="headerLabel">@(Model.Action) Customer Contact</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="CustomerContactsUpdate">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <input asp-for="contact.CustomerContactId" type="hidden" />
+                    <input asp-for="contact.CustomerId" type="hidden" />
+                    <input asp-for="Action" type="hidden" />
+                    <div class="form-group">
+                        <label asp-for="contact.ContactTypeCode" class="control-label"></label>
+                        <select asp-for="contact.ContactTypeCode" class="form-control" asp-items="@Model.AvailableContactTypesSL"></select>
+                        <span asp-validation-for="contact.ContactTypeCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.ContactName" class="control-label"></label>
+                        <input asp-for="contact.ContactName" class="form-control" />
+                        <span asp-validation-for="contact.ContactName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.Address1" class="control-label"></label>
+                        <input asp-for="contact.Address1" class="form-control" />
+                        <span asp-validation-for="contact.Address1" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.Address2" class="control-label"></label>
+                        <input asp-for="contact.Address2" class="form-control" />
+                        <span asp-validation-for="contact.Address2" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.City" class="control-label"></label>
+                        <input asp-for="contact.City" class="form-control" />
+                        <span asp-validation-for="contact.City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.State" class="control-label"></label>
+                        <input asp-for="contact.State" class="form-control" />
+                        <span asp-validation-for="contact.State" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.Zip" class="control-label"></label>
+                        <input asp-for="contact.Zip" class="form-control" />
+                        <span asp-validation-for="contact.Zip" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.Phone" class="control-label"></label>
+                        <input asp-for="contact.Phone" class="form-control" />
+                        <span asp-validation-for="contact.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="contact.Email" class="control-label"></label>
+                        <input asp-for="contact.Email" class="form-control" />
+                        <span asp-validation-for="contact.Email" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">@(Model.Action == "Delete" ? "Delete" : "Save")</button>
+                <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    @(Model.Action == "Delete" ? "Deleting..." : "Saving...")
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -7,11 +7,15 @@ namespace awSetup_Razor.Pages.Customers
     {
         public static string CustomerEdit => "CustomerEdit";
 
+        public static string CustomerContacts => "CustomerContacts";
+
         public static string CustomerRates => "CustomerRates";
 
         public static string CustomerPhones => "CustomerPhones";
 
         public static string CustomerEditNavClass(ViewContext viewContext) => PageNavClass(viewContext, CustomerEdit);
+
+        public static string CustomerContactsNavClass(ViewContext viewContext) => PageNavClass(viewContext, CustomerContacts);
 
         public static string CustomerRatesNavClass(ViewContext viewContext) => PageNavClass(viewContext, CustomerRates);
 

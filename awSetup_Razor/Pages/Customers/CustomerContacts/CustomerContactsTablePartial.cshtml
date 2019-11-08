@@ -1,0 +1,56 @@
+﻿@model List<awSetup_Razor.Models.CustomerContacts>
+@using Microsoft.AspNetCore.Http
+
+<table class="table" data-url="@Url.Page("CustomerContactsIndex", "TableRefresh", new { id = Context.Session.GetInt32("CustomerId") })">
+    <thead>
+        <tr>
+            <th>
+                <a class="btn fas fa-plus-square" data-toggle="ajax-modal" data-target="#update-customercontacts"
+                   data-url="@Url.Page("CustomerContactsIndex", "CustomerContactsCreate", new {id =  Context.Session.GetInt32("CustomerId")})"
+                   title="Add Contact"></a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ContactTypeCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#update-customercontacts"
+                   data-url="@Url.Page("CustomerContactsIndex", "CustomerContactsEdit", new {id = item.CustomerContactId })"
+                   title="Edit Contact"></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactTypeCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a class="btn fas fa-trash-alt" data-toggle="ajax-modal" data-target="#update-customercontacts"
+                   data-url="@Url.Page("CustomerContactsIndex", "CustomerContactsDelete", new {id = item.CustomerContactId })"
+                   title="Delete Contact"></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

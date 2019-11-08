@@ -16,6 +16,7 @@ namespace awSetup_Razor.Models
         }
 
         public virtual DbSet<Codes> Codes { get; set; }
+        public virtual DbSet<CustomerContacts> CustomerContacts { get; set; }
         public virtual DbSet<CustomerOptions> CustomerOptions { get; set; }
         public virtual DbSet<CustomerPhones> CustomerPhones { get; set; }
         public virtual DbSet<CustomerRates> CustomerRates { get; set; }
@@ -71,6 +72,32 @@ namespace awSetup_Razor.Models
                 entity.Property(e => e.TwilioCode).IsUnicode(false);
             });
 
+            modelBuilder.Entity<CustomerContacts>(entity =>
+            {
+                entity.Property(e => e.Address1).IsUnicode(false);
+
+                entity.Property(e => e.Address2).IsUnicode(false);
+
+                entity.Property(e => e.City).IsUnicode(false);
+
+                entity.Property(e => e.ContactName).IsUnicode(false);
+
+                entity.Property(e => e.ContactTypeCode).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                entity.Property(e => e.Phone).IsUnicode(false);
+
+                entity.Property(e => e.State).IsUnicode(false);
+
+                entity.Property(e => e.Zip).IsUnicode(false);
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.CustomerContacts)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK_CustomerContacts_Customers");
+            });
+
             modelBuilder.Entity<CustomerOptions>(entity =>
             {
                 entity.Property(e => e.OptionNameCode).IsUnicode(false);
@@ -78,6 +105,11 @@ namespace awSetup_Razor.Models
                 entity.Property(e => e.OptionTypeCode).IsUnicode(false);
 
                 entity.Property(e => e.OptionValueCode).IsUnicode(false);
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.CustomerOptions)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK_CustomerOptions_Customers");
             });
 
             modelBuilder.Entity<CustomerPhones>(entity =>

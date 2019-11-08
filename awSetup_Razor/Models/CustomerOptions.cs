@@ -21,5 +21,9 @@ namespace awSetup_Razor.Models
         [Required]
         [StringLength(30)]
         public string OptionValueCode { get; set; }
+
+        [ForeignKey("CustomerId")]
+        [InverseProperty("CustomerOptions")]
+        public virtual Customers Customer { get; set; }
     }
 }

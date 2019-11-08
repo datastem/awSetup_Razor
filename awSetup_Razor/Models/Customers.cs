@@ -7,6 +7,12 @@ namespace awSetup_Razor.Models
 {
     public partial class Customers
     {
+        public Customers()
+        {
+            CustomerContacts = new HashSet<CustomerContacts>();
+            CustomerOptions = new HashSet<CustomerOptions>();
+        }
+
         [Key]
         [Column("CustomerID")]
         public int CustomerId { get; set; }
@@ -22,8 +28,6 @@ namespace awSetup_Razor.Models
         [Required]
         [StringLength(10)]
         public string PrimaryPhone { get; set; }
-
-        [Required]
         public bool IsMember { get; set; }
 
         public int TimeZoneOffset { get; set; }
@@ -50,8 +54,16 @@ namespace awSetup_Razor.Models
 
         [StringLength(100)]
         public string TwilioAuthToken { get; set; }
-
         public bool Active { get; set; }
+
+        [Column("EnteredByID")]
+        public int? EnteredById { get; set; }
+
+        [InverseProperty("Customer")]
+        public virtual ICollection<CustomerContacts> CustomerContacts { get; set; }
+
+        [InverseProperty("Customer")]
+        public virtual ICollection<CustomerOptions> CustomerOptions { get; set; }
 
         [NotMapped]
         public string Action { get; set; }

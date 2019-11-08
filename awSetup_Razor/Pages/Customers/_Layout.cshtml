@@ -20,9 +20,14 @@
                        asp-route-id="@customerid">Customer</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link @ManageCustomerPages.CustomerContactsNavClass(ViewContext)"
+                       asp-page="/Customers/CustomerContacts/CustomerContactsIndex"
+                       asp-route-id="@customerid">Contacts</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link @ManageCustomerPages.CustomerRatesNavClass(ViewContext)"
-                        asp-page="/Customers/CustomerRates/CustomerRatesEdit"
-                        asp-route-id="@customerid">Rates</a>
+                       asp-page="/Customers/CustomerRates/CustomerRatesEdit"
+                       asp-route-id="@customerid">Rates</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ManageCustomerPages.CustomerPhonesNavClass(ViewContext)"
