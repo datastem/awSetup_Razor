@@ -1,15 +1,14 @@
 ﻿@page
-@model awSetup_Razor.Pages.Scripts.ScriptActionsModel
+@model awSetup_Razor.Pages.Scripts.ScriptActionsIndexModel
 
 @{
-    ViewData["Title"] = "ScriptActions";
+    ViewData["Title"] = "ScriptActionsIndex";
     ViewData["ActivePage"] = ManageScriptPages.ScriptActions;
 }
 
 <div id="modal-placeholder"></div>
 
-@await Html.PartialAsync("ScriptActionsTablePartial", Model.ScriptActions)
-
+<partial name="ScriptActionsTablePartial" for="ScriptActions" />
 
 @section Scripts {
     <script src="~/js/modal.js"></script>

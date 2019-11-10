@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace awSetup_Razor.Models.ViewModels
 {
-    public class TwilioPhoneEdit
+    public class CustomerPhonesEdit
     {
         public CustomerPhones CustomerPhone { get; set; }
         public List<SelectListItem> AvailableNumbersSL { get; set; }

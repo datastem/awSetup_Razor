@@ -2,20 +2,18 @@
 
 <div class="row">
     <div class="col-10 offset-1">
-        @Model.FirstOrDefault().ScriptId
-        </br>
-        <table class="table" data-url="@Url.Page("ScriptTags", "ScriptTagsTableRefresh", new { scriptid = Model.FirstOrDefault().ScriptId })">
+        <table class="table" data-url="@Url.Page("ScriptTagsIndex", "ScriptTagsTableRefresh", new { scriptid = Model.FirstOrDefault().ScriptId })">
             <thead>
                 <tr>
                     <th></th>
                     <th>
-                        TagName
+                        Tag Name
                     </th>
                     <th>
-                        FormatCode
+                        Format Code
                     </th>
                     <th>
-                        QueueMapCode
+                        Queue Map
                     </th>
                     <th></th>
                 </tr>
@@ -25,8 +23,8 @@
                 {
                     <tr>
                         <td>
-                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scripttag"
-                               data-url="@Url.Page("ScriptTags", "ScriptTagsEdit", new {id = item.ScriptTagId })"
+                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#update-scripttag"
+                               data-url="@Url.Page("ScriptTagsIndex", "ScriptTagsEdit", new {id = item.ScriptTagId })"
                                title="Edit Tag"></a>
                         </td>
                         <td>
@@ -39,14 +37,10 @@
                             @Html.DisplayFor(modelItem => item.QueueMapCode)
                         </td>
                         <td>
-                            <a class="btn fas fa-trash-alt" data-toggle="ajax-modal"
-                               data-target="#delete-scripttag"
-                               data-url="@Url.Page("ScriptTags", "ScriptTagsDelete", new {id = item.ScriptTagId })"
-                               title="Remove Tag"></a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-</div>
+    </div>
 </div>

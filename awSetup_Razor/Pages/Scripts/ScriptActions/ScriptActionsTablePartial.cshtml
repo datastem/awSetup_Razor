@@ -3,12 +3,12 @@
 
 <div class="row">
     <div class="col-10 offset-1">
-        <table class="table table-sm" data-url="@Url.Page("ScriptActions", "ScriptActionsTableRefresh", new { scriptid = Context.Session.GetInt32("ScriptId") })">
+        <table class="table table-sm" data-url="@Url.Page("ScriptActionsIndex", "TableRefresh", new { id = Context.Session.GetInt32("ScriptId") })">
             <thead>
                 <tr>
                     <th>
-                        <a class="btn fas fa-plus-square" data-toggle="ajax-modal" data-target="#create-scriptaction"
-                           data-url="@Url.Page("ScriptActions", "ScriptActionsCreate", new {scriptid = Context.Session.GetInt32("ScriptId") })"
+                        <a class="btn fas fa-plus-square" data-toggle="ajax-modal" data-target="#update-scriptaction"
+                           data-url="@Url.Page("ScriptActionsIndex", "ScriptActionsCreate", new { id = Context.Session.GetInt32("ScriptId") })"
                            title="Add Action"></a>
                     </th>
                     <th>
@@ -44,8 +44,8 @@
                 {
                     <tr>
                         <td>
-                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#edit-scriptaction"
-                               data-url="@Url.Page("ScriptActions", "ScriptActionsEdit", new {id = item.ScriptActionId })"
+                            <a class="btn fas fa-edit" data-toggle="ajax-modal" data-target="#update-scriptaction"
+                               data-url="@Url.Page("ScriptActionsIndex", "ScriptActionsEdit", new {id = item.ScriptActionId })"
                                title="Edit Action"></a>
                         </td>
                         <td>
@@ -68,8 +68,8 @@
                         }
                         <td>
                             <a class="btn fas fa-trash-alt" data-toggle="ajax-modal"
-                               data-target="#delete-scriptaction"
-                               data-url="@Url.Page("ScriptActions", "ScriptActionsDelete", new {id = item.ScriptActionId })"
+                               data-target="#update-scriptaction"
+                               data-url="@Url.Page("ScriptActionsIndex", "ScriptActionsDelete", new {id = item.ScriptActionId })"
                                title="Remove Action"></a>
                         </td>
                     </tr>

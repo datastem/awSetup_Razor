@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace awSetup_Razor.Pages.Customers
 {
@@ -54,13 +52,9 @@ namespace awSetup_Razor.Pages.Customers
                 Active = true
             };
 
-            return new PartialViewResult
-            {
-                ViewName = @".\Customers\CustomersModal",
-                ViewData = new ViewDataDictionary<Models.Customers>(ViewData, customer)
-            };
-
             //TODO:  Create CustomerRate record
+
+            return GetCustomersModal(customer);
         }
 
         public IActionResult OnGetCustomerEdit(int id)
@@ -74,23 +68,19 @@ namespace awSetup_Razor.Pages.Customers
             Models.Customers customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
             customer.Action = "Delete";
 
-            return new PartialViewResult
-            {
-                ViewName = @".\Customers\CustomersModal",
-                ViewData = new ViewDataDictionary<Models.Customers>(ViewData, customer)
-            };
+            //TODO: Cancel Twilio Phone Numbers
 
-            //TODO:  Create CustomerRate record
+            return GetCustomersModal(customer);
         }
 
-        public PartialViewResult OnPostCustomersUpdate(Models.Customers customer)
+        public async Task<PartialViewResult> OnPostCustomersUpdate(Models.Customers customer)
         {
             if (ModelState.IsValid)
             {
                 switch (customer.Action)
                 {
                     case "Create":
-                        string ftppath = _context.Settings.Where(s => s.ItemName == "FTPFolderPath").Select(s => s.ItemValue).Single();
+                        string ftppath = await _context.Settings.Where(s => s.ItemName == "FTPFolderPath").Select(s => s.ItemValue).SingleAsync();
 
                         customer.FTPFolderPath = ftppath + customer.CustomerCode;
                         customer.FTPUserName = customer.CustomerCode;
@@ -101,7 +91,7 @@ namespace awSetup_Razor.Pages.Customers
                         
 
                         _context.Customers.Add(customer);
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
 
                         Models.MasterRates masterrate = _context.MasterRates.FirstOrDefault(mr => mr.IsMember == customer.IsMember);
                         Models.CustomerRates rate = new Models.CustomerRates
@@ -115,18 +105,25 @@ namespace awSetup_Razor.Pages.Customers
 
 
                         break;
+
                     case "Edit":
                         //Not used here
                         break;
+
                     case "Delete":
                         _context.Customers.Remove(customer);
                         //TODO: Close Twilio Subaccount
                         //TODO: Cancel Twilio Phone
                         break;
                 }
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
+            return GetCustomersModal(customer);
+        }
+
+        private PartialViewResult GetCustomersModal(Models.Customers customer)
+        {
             return new PartialViewResult
             {
                 ViewName = @".\Customers\CustomersModal",
@@ -134,58 +131,55 @@ namespace awSetup_Razor.Pages.Customers
             };
         }
 
+        /*
+                public async Task<IActionResult> OnGetCreateFTPUser(int id)
+                {
+                    //https://kimsereyblog.blogspot.com/2018/01/start-processes-from-c-in-dotnet-core.html
+                    //https://stackoverflow.com/questions/43515360/net-core-process-start-leaving-defunct-child-process-behind
+
+                    Models.Customers customer = await _context.Customers.FindAsync(id);
+
+                    List<Models.Settings> settings = await _context.Settings.ToListAsync();
+
+                    string coreftpexec = settings.Find(s => s.ItemName == "CoreFTPServerExec").ItemValue;
+                    string coreftpdomain = settings.Find(s => s.ItemName == "CoreFTPDomain").ItemValue;
+                    string ftppath = settings.Find(s => s.ItemName == "FTPFolderPath").ItemValue;
+
+                    if (string.IsNullOrWhiteSpace(customer.FTPFolderPath))
+                        customer.FTPFolderPath = ftppath + customer.CustomerCode;
+
+                    if (string.IsNullOrWhiteSpace(customer.FTPUserName))
+                        customer.FTPUserName = customer.CustomerCode;
+
+                    if (string.IsNullOrWhiteSpace(customer.FTPPassword))
+                        customer.FTPPassword = GenerateRandomPassword();
+
+                    _context.Customers.Update(customer);
+                    await _context.SaveChangesAsync();
+
+                    ProcessStartInfo processStartInfo = new ProcessStartInfo
+                    {
+                        FileName = coreftpexec,
+                        WorkingDirectory = Path.GetDirectoryName(coreftpexec),
+                        Arguments = $"-adduser {coreftpdomain} {customer.FTPUserName} {customer.FTPPassword} {customer.FTPFolderPath}",
+                        UseShellExecute = false,
+                        CreateNoWindow = false,
+                        RedirectStandardOutput = false,
+                        Domain = "tejashma",
+                        UserName = "strapp",
+                        PasswordInClearText = "Brushy42514!",
+                        Verb = "runas"
+                    };
 
 
+                    using (Process process = new Process() { StartInfo = processStartInfo, EnableRaisingEvents = true })
+                    {
+                        process.Start();
+                    }
 
-        public async Task<IActionResult> OnGetCreateFTPUser(int id)
-        {
-            /*https://kimsereyblog.blogspot.com/2018/01/start-processes-from-c-in-dotnet-core.html
-             * https://stackoverflow.com/questions/43515360/net-core-process-start-leaving-defunct-child-process-behind
-             */
-
-            Models.Customers customer = await _context.Customers.FindAsync(id);
-
-            List<Models.Settings> settings = await _context.Settings.ToListAsync();
-
-            string coreftpexec = settings.Find(s => s.ItemName == "CoreFTPServerExec").ItemValue;
-            string coreftpdomain = settings.Find(s => s.ItemName == "CoreFTPDomain").ItemValue;
-            string ftppath = settings.Find(s => s.ItemName == "FTPFolderPath").ItemValue;
-
-            if (string.IsNullOrWhiteSpace(customer.FTPFolderPath))
-                customer.FTPFolderPath = ftppath + customer.CustomerCode;
-
-            if (string.IsNullOrWhiteSpace(customer.FTPUserName))
-                customer.FTPUserName = customer.CustomerCode;
-
-            if (string.IsNullOrWhiteSpace(customer.FTPPassword))
-                customer.FTPPassword = GenerateRandomPassword();
-
-            _context.Customers.Update(customer);
-            await _context.SaveChangesAsync();
-
-            ProcessStartInfo processStartInfo = new ProcessStartInfo
-            {
-                FileName = coreftpexec,
-                WorkingDirectory = Path.GetDirectoryName(coreftpexec),
-                Arguments = $"-adduser {coreftpdomain} {customer.FTPUserName} {customer.FTPPassword} {customer.FTPFolderPath}",
-                UseShellExecute = false,
-                CreateNoWindow = false,
-                RedirectStandardOutput = false,
-                Domain = "tejashma",
-                UserName = "strapp",
-                PasswordInClearText = "Brushy42514!",
-                Verb = "runas"
-            };
-
-
-            using (Process process = new Process() { StartInfo = processStartInfo, EnableRaisingEvents = true })
-            {
-                process.Start();
-            }
-
-            return RedirectToPage("/Customers/CustomerIndex");
-        }     
-
+                    return RedirectToPage("/Customers/CustomerIndex");
+                }     
+        */
 
         /// <summary>
         /// Generates a Random Password
@@ -195,6 +189,7 @@ namespace awSetup_Razor.Pages.Customers
         /// containing the password strength requirements.</param>
         /// <returns>A random password</returns>
         /// https://www.ryadel.com/en/c-sharp-random-password-generator-asp-net-core-mvc/
+
         public static string GenerateRandomPassword(PasswordOptions opts = null)
         {
             if (opts == null) opts = new PasswordOptions()

@@ -1,4 +1,4 @@
-﻿@model awSetup_Razor.Models.ViewModels.TwilioPhoneEdit
+﻿@model awSetup_Razor.Models.ViewModels.CustomerPhonesEdit
 
 <div class="modal fade" id="update-customerphones" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
@@ -55,19 +55,19 @@
                     }
                     <div class="form-group">
                         <label asp-for="CustomerPhone.ForwardNumber" class="control-label"></label>
-                        <input asp-for="CustomerPhone.ForwardNumber" class="form-control" disabled="@(Model.Action=="Delete"? "disabled" : null)" />
+                        <input asp-for="CustomerPhone.ForwardNumber" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)" />
                         <span asp-validation-for="CustomerPhone.ForwardNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="CustomerPhone.UnhandledMessage" class="control-label"></label>
-                        <textarea asp-for="CustomerPhone.UnhandledMessage" class="form-control" rows="3" disabled="@(Model.Action=="Delete"? "disabled" : null)"></textarea>
+                        <textarea asp-for="CustomerPhone.UnhandledMessage" class="form-control" rows="3" readonly="@(Model.Action=="Delete"? "readonly" : null)"></textarea>
                         <span asp-validation-for="CustomerPhone.UnhandledMessage" class="text-danger"></span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-save="modal">@(Model.Action == "Delete" ? "Delete" : "Save")</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     @(Model.Action == "Delete" ? "Deleting..." : "Saving...")

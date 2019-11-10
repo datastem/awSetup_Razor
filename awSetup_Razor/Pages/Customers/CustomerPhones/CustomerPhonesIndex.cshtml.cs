@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using awSetup_Razor.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 using Twilio;
 using Twilio.Base;
 using Twilio.Rest.Api.V2010.Account.AvailablePhoneNumberCountry;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
 
 namespace awSetup_Razor.Pages.Customers.CustomerPhones
 {
@@ -32,11 +31,11 @@ namespace awSetup_Razor.Pages.Customers.CustomerPhones
             return Page();
         }
 
-        public PartialViewResult OnGetTableRefresh(int id)
+        public async Task<PartialViewResult> OnGetTableRefreshAsync(int id)
         {
-            CustomerPhones = _context.CustomerPhones.Where(cp => cp.CustomerId == id).ToList();
-            
-            PartialViewResult pv = new PartialViewResult
+            CustomerPhones = await _context.CustomerPhones.Where(cp => cp.CustomerId == id).ToListAsync();
+
+            return new PartialViewResult
             {
                 ViewName = @".\Customers\CustomerPhones\CustomerPhonesTablePartial",
                 ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
@@ -44,61 +43,34 @@ namespace awSetup_Razor.Pages.Customers.CustomerPhones
                     Model = CustomerPhones
                 }
             };
-            return pv;
         }
 
-        public PartialViewResult OnGetCustomerPhonesCreate(int id)
+        public async Task<PartialViewResult> OnGetCustomerPhonesCreateAsync(int id)
         {
-            Models.Customers customer = _context.Customers.FirstOrDefault(c => c.CustomerId == id);
+            Models.Customers customer = await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
 
-            List<SelectListItem> phonelist = TwilioPhoneList(id, customer.PrimaryPhone, 10);
-
-            TwilioPhoneEdit phone = new TwilioPhoneEdit
+            CustomerPhonesEdit phone = new CustomerPhonesEdit
             {
                 CustomerPhone = new Models.CustomerPhones { CustomerId = id },
-                AvailableNumbersSL = phonelist,
+                AvailableNumbersSL = TwilioPhoneList(id, customer.PrimaryPhone, 10),
                 PrimaryPhone = customer.PrimaryPhone,
                 Action = "Create"
             };
 
-            return new PartialViewResult
-            {
-                ViewName = @".\Customers\CustomerPhones\CustomerPhonesModalPartial",
-                ViewData = new ViewDataDictionary<TwilioPhoneEdit>(ViewData, phone)
-            };
+            return CustomerPhonesModal(phone);
         }
 
-        public PartialViewResult OnGetCustomerPhonesEdit(int id)
+        public async Task<PartialViewResult> OnGetCustomerPhonesEditAsync(int id)
         {
-            TwilioPhoneEdit phone = new TwilioPhoneEdit
-            {
-                CustomerPhone = _context.CustomerPhones.FirstOrDefault(cp => cp.CustomerPhoneId == id),
-                Action = "Edit"
-            };
-
-            return new PartialViewResult
-            {
-                ViewName = @".\Customers\CustomerPhones\CustomerPhonesModalPartial",
-                ViewData = new ViewDataDictionary<TwilioPhoneEdit>(ViewData, phone)
-            };
+            return CustomerPhonesModal(await GetCustomerPhonesEditAsync(id,"Edit"));
         }
 
-        public PartialViewResult OnGetCustomerPhonesDelete(int id)
+        public async Task<PartialViewResult> OnGetCustomerPhonesDeleteAsync(int id)
         {
-            TwilioPhoneEdit phone = new TwilioPhoneEdit
-            {
-                CustomerPhone = _context.CustomerPhones.FirstOrDefault(cp => cp.CustomerPhoneId == id),
-                Action = "Delete"
-            };
-
-            return new PartialViewResult
-            {
-                ViewName = @".\Customers\CustomerPhones\CustomerPhonesModalPartial",
-                ViewData = new ViewDataDictionary<TwilioPhoneEdit>(ViewData, phone)
-            };
+            return CustomerPhonesModal(await GetCustomerPhonesEditAsync(id, "Delete"));
         }
 
-        public PartialViewResult OnPostCustomerPhonesUpdate(TwilioPhoneEdit phone)
+        public async Task<PartialViewResult> OnPostCustomerPhonesUpdateAsync(CustomerPhonesEdit phone)
         {
             if (ModelState.IsValid)
             {
@@ -117,16 +89,30 @@ namespace awSetup_Razor.Pages.Customers.CustomerPhones
                         //TODO:  Cancel Twilio Phone
                         break;
                 }
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
-            return new PartialViewResult
+            return CustomerPhonesModal(phone);
+        }
+
+        private async Task<CustomerPhonesEdit> GetCustomerPhonesEditAsync(int id, string action)
+        {
+            return new CustomerPhonesEdit
             {
-                ViewName = @".\Customers\CustomerPhones\CustomerPhonesModalPartial",
-                ViewData = new ViewDataDictionary<TwilioPhoneEdit>(ViewData, phone)
+                CustomerPhone = await _context.CustomerPhones.FirstOrDefaultAsync(cc => cc.CustomerPhoneId == id),
+                Action = action
             };
         }
 
+        private PartialViewResult CustomerPhonesModal(CustomerPhonesEdit customerPhone)
+        {
+            return new PartialViewResult
+            {
+                ViewName = @".\Customers\CustomerPhones\CustomerPhonesModal",
+                ViewData = new ViewDataDictionary<CustomerPhonesEdit>(ViewData, customerPhone)
+            };
+        }
+        
         /*
          * Refresh the Twilio Available numbers (Create only)
          */
@@ -134,6 +120,7 @@ namespace awSetup_Razor.Pages.Customers.CustomerPhones
         {
             return new JsonResult(TwilioPhoneList(customerid, phone, miles));
         }
+
         private List<SelectListItem> TwilioPhoneList(int customerid, string phone, int miles)
         {
             Models.Customers customer = _context.Customers.FirstOrDefault(c => c.CustomerId == customerid);

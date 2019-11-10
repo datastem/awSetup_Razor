@@ -25,14 +25,19 @@
                        asp-route-id="@customerid">Contacts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @ManageCustomerPages.CustomerRatesNavClass(ViewContext)"
-                       asp-page="/Customers/CustomerRates/CustomerRatesEdit"
-                       asp-route-id="@customerid">Rates</a>
+                    <a class="nav-link @ManageCustomerPages.CustomerOptionsNavClass(ViewContext)"
+                       asp-page="/Customers/CustomerOptions/CustomerOptionsIndex"
+                       asp-route-id="@customerid">Options</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @ManageCustomerPages.CustomerPhonesNavClass(ViewContext)"
                        asp-page="/Customers/CustomerPhones/CustomerPhonesIndex"
                        asp-route-id="@customerid">Phones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageCustomerPages.CustomerRatesNavClass(ViewContext)"
+                       asp-page="/Customers/CustomerRates/CustomerRatesEdit"
+                       asp-route-id="@customerid">Rates</a>
                 </li>
             </ul>
         </nav>

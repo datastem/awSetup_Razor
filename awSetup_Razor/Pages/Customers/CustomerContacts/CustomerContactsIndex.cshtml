@@ -8,11 +8,12 @@
 
 <div id="modal-placeholder"></div>
 
-<h1>CustomerContactsIndex</h1>
+<div id="notification" data-url="@Url.Page("CustomerContactsIndex","Notifications")"></div>
 
 <partial name="CustomerContactsTablePartial" for="CustomerContacts" />
 
 @section Scripts {
     <script src="~/js/modal.js"></script>
+    <script src="~/lib/jquery/dist/jquery.mask.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

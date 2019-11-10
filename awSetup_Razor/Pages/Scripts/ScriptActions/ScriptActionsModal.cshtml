@@ -1,0 +1,81 @@
+﻿@model awSetup_Razor.Models.ViewModels.ScriptActionsEdit
+@using Microsoft.AspNetCore.Http
+
+@{
+    string deliveryTypeCode = Context.Session.GetString("DeliveryTypeCode");
+}
+
+<div class="modal fade" id="update-ScriptAction" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header @(Model.Action=="Delete"? "bg-danger" : null)">
+                <h5 class="modal-title" id="headerLabel">@(Model.Action) Script Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="ScriptActionsUpdate">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <input type="hidden" asp-for="ScriptAction.ScriptActionId" />
+                    <input type="hidden" asp-for="ScriptAction.ScriptId" />
+                    <input type="hidden" asp-for="ScriptAction.StoredProcedure" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    @if (deliveryTypeCode == "V")
+                    {
+                        <div class="form-group">
+                            <label asp-for="ScriptAction.Response"></label>
+                            <select asp-for="ScriptAction.Response" class="form-control" asp-items="@Model.AvailableResponsesSL" readonly="@(Model.Action=="Delete"? "readonly" : null)"></select>
+                            <span asp-validation-for="ScriptAction.Response" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label asp-for="ScriptAction.Response"></label>
+                            <input asp-for="ScriptAction.Response" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)"/>
+                            <span asp-validation-for="ScriptAction.Response" class="text-danger"></span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label asp-for="ScriptAction.ActionCode"></label>
+                        <select asp-for="ScriptAction.ActionCode" class="form-control" asp-items="@Model.AvailableCodesSL" readonly="@(Model.Action=="Delete"? "readonly" : null)"></select>
+                        <span asp-validation-for="ScriptAction.ActionCode" ActionCode" class="text-danger"></span>
+                    </div>
+                    @if (deliveryTypeCode == "V")
+                    {
+                        <div class="form-group">
+                            <label asp-for="ScriptAction.Dial"></label>
+                            <input asp-for="ScriptAction.Dial" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)"/>
+                            <span asp-validation-for="ScriptAction.Dial" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ScriptAction.DialTag"></label>
+                            <input asp-for="ScriptAction.DialTag" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)"/>
+                            <span asp-validation-for="ScriptAction.DialTag" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="ScriptAction.Dial" />
+                        <input type="hidden" asp-for="ScriptAction.DialTag" />
+                    }
+                    <div class="form-group">
+                        <label asp-for="ScriptAction.ReplyText"></label>
+                        <input asp-for="ScriptAction.ReplyText" class="form-control" readonly="@(Model.Action=="Delete"? "readonly" : null)"/>
+                        <span asp-validation-for="ScriptAction.ReplyText" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">@(Model.Action == "Delete" ? "Delete" : "Save")</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    @(Model.Action == "Delete" ? "Deleting..." : "Saving...")
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

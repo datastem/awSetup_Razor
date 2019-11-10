@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using awSetup_Razor.Models;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using awSetup_Razor.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 
 namespace awSetup_Razor.Pages.Customers.CustomerContacts
 {
     public class CustomerContactsIndexModel : PageModel
     {
-        private readonly awSetup_Razor.Models.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CustomerContactsIndexModel(awSetup_Razor.Models.ApplicationDbContext context)
+        public CustomerContactsIndexModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -48,21 +48,20 @@ namespace awSetup_Razor.Pages.Customers.CustomerContacts
             CustomerContactsEdit customerContact = new CustomerContactsEdit
             {
                 contact = new Models.CustomerContacts { CustomerId = id },
-                AvailableContactTypesSL = await ContactTypesListAsync(),
                 Action = "Create"
             };
 
-            return CustomerContactModal(customerContact);
+            return await CustomerContactModalAsync(customerContact);
         }
 
         public async Task<PartialViewResult> OnGetCustomerContactsEditAsync(int id)
         {
-            return CustomerContactModal(await GetCustomerContactsEditAsync(id,"Edit"));
+            return await CustomerContactModalAsync(await GetCustomerContactsEditAsync(id,"Edit"));
         }
 
         public async Task<PartialViewResult> OnGetCustomerContactsDeleteAsync(int id)
         {
-            return CustomerContactModal(await GetCustomerContactsEditAsync(id, "Delete"));
+            return await CustomerContactModalAsync(await GetCustomerContactsEditAsync(id, "Delete"));
         }
 
         public async Task<PartialViewResult> OnPostCustomerContactsUpdateAsync(CustomerContactsEdit customerContact)
@@ -81,10 +80,17 @@ namespace awSetup_Razor.Pages.Customers.CustomerContacts
                         _context.CustomerContacts.Remove(customerContact.contact);
                         break;
                 }
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    CreateNotification(ex.Message);
+                }
             }
 
-            return CustomerContactModal(customerContact);
+            return await CustomerContactModalAsync(customerContact);
         }
 
         private async Task<CustomerContactsEdit> GetCustomerContactsEditAsync(int id, string action)
@@ -92,13 +98,14 @@ namespace awSetup_Razor.Pages.Customers.CustomerContacts
             return new CustomerContactsEdit
             {
                 contact = await _context.CustomerContacts.FirstOrDefaultAsync(cc => cc.CustomerContactId == id),
-                AvailableContactTypesSL = await ContactTypesListAsync(),
                 Action = action
             };
         }
 
-        private PartialViewResult CustomerContactModal(CustomerContactsEdit customerContact)
+        private async Task<PartialViewResult> CustomerContactModalAsync(CustomerContactsEdit customerContact)
         {
+            customerContact.AvailableContactTypesSL = await ContactTypesListAsync();
+
             return new PartialViewResult
             {
                 ViewName = @".\Customers\CustomerContacts\CustomerContactsModal",
@@ -110,6 +117,31 @@ namespace awSetup_Razor.Pages.Customers.CustomerContacts
             return await (from c in _context.Codes
                     where c.Category == "ContactType" && c.IsActive == true
                     select new SelectListItem { Value = c.Code, Text = c.Label }).ToListAsync();
+        }
+
+        /*-------------------------------------------------------------
+         * Notifcation methods
+        * ------------------------------------------------------------*/
+        private void CreateNotification(string message)
+        {
+            TempData.TryGetValue("Notifications", out object value);
+            var notifications = value as List<string> ?? new List<string>();
+            notifications.Add(message);
+            TempData["Notifications"] = notifications;
+        }
+
+        public PartialViewResult Notifications()
+        {
+            TempData.TryGetValue("Notifications", out object value);
+            var notifications = value as IEnumerable<string> ?? Enumerable.Empty<string>();
+            
+            var pv = new PartialViewResult
+            {
+                ViewName = @"_NotificationsPartial",
+                ViewData = new ViewDataDictionary<IEnumerable<string>>(ViewData, notifications)
+            };
+
+            return pv;
         }
     }
 }

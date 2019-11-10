@@ -1,0 +1,17 @@
+﻿@page
+@model awSetup_Razor.Pages.Customers.IndexModel
+
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "CustomersIndex";
+}
+
+<div id="notification" data-url="@Url.Page("CustomersIndex","Notifications")"></div>
+
+<div id="modal-placeholder"></div>
+
+<partial name="CustomersTablePartial" for="Customers" />
+
+@section Scripts {
+    <script src="~/js/modal.js"></script>
+}

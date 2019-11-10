@@ -1,26 +1,20 @@
-﻿@model awSetup_Razor.Models.ViewModels.TagEdit
-@{
-    ViewData["Title"] = "Edit";
-}
-<div class="modal fade" id="edit-scripttag" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
+﻿@model awSetup_Razor.Models.ViewModels.ScriptTagsEdit
+
+<div class="modal fade" id="update-scripttag" tabindex="-1" role="dialog" aria-labelledby="headerLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="headerLabel">Edit Tag</h5>
+            <div class="modal-header @(Model.Action=="Delete"? "bg-danger" : null)">
+                <h5 class="modal-title" id="headerLabel">@(Model.Action) Script Tag</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-page-handler="ScriptTagsEdit">
+                <form asp-page-handler="ScriptTagsUpdate">
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="ScriptTag.ScriptTagId" />
-                    <div class="form-group">
-                        <label asp-for="ScriptTag.ScriptId" class="control-label"></label>
-                        <input asp-for="ScriptTag.ScriptId" class="form-control" readonly />
-                        <span asp-validation-for="ScriptTag.ScriptId" class="text-danger"></span>
-                    </div>
+                    <input type="hidden" asp-for="ScriptTag.ScriptId" />
                     <div class="form-group">
                         <label asp-for="ScriptTag.TagName" class="control-label"></label>
                         <input asp-for="ScriptTag.TagName" class="form-control" readonly />
@@ -28,28 +22,31 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="ScriptTag.DataTypeCode" class="control-label"></label>
-                        @*TODO: Setup onchange event and specific js function*@
-                        <select asp-for="ScriptTag.DataTypeCode" class="form-control" asp-items="@Model.DataTypeSL" onchange="$.changeFormatList()"></select>
+                        <select asp-for="ScriptTag.DataTypeCode" class="form-control" asp-items="@Model.DataTypeSL"
+                                onchange="$.changeFormatList()"
+                                readonly="@(Model.Action=="Delete"? "readonly" : null)"></select>
                         <span asp-validation-for="ScriptTag.DataTypeCode" class="text-danger"></span>
                     </div>
                     <div class="form-group" id="FormatCodeGroup">
                         <label asp-for="ScriptTag.FormatCode" class="control-label"></label>
-                        <select asp-for="ScriptTag.FormatCode" class="form-control" asp-items="@(Model.ScriptTag.DataTypeCode == "D" ? Model.DateFormatSL:Model.ScriptTag.DataTypeCode == "T" ? Model.TimeFormatSL : null)"></select>
+                        <select asp-for="ScriptTag.FormatCode" class="form-control"
+                                asp-items="@(Model.ScriptTag.DataTypeCode == "D" ? Model.DateFormatSL:Model.ScriptTag.DataTypeCode == "T" ? Model.TimeFormatSL : null)"
+                                readonly="@(Model.Action=="Delete"? "readonly" : null)"></select>
                         <span asp-validation-for="ScriptTag.FormatCode" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ScriptTag.QueueMapCode" class="control-label"></label>
-                        <select asp-for="ScriptTag.QueueMapCode" class="form-control" asp-items="@Model.QueueMapSL"></select>
+                        <select asp-for="ScriptTag.QueueMapCode" class="form-control" asp-items="@Model.QueueMapSL" readonly="@(Model.Action=="Delete"? "readonly" : null)"></select>
                         <span asp-validation-for="ScriptTag.QueueMapCode" class="text-danger"></span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-save="modal">@(Model.Action == "Delete" ? "Delete" : "Save")</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
                 <button type="button" class="btn btn-primary" data-saving="modal" disabled style="display:none;">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Saving...
+                    @(Model.Action == "Delete" ? "Deleting..." : "Saving...")
                 </button>
             </div>
         </div>

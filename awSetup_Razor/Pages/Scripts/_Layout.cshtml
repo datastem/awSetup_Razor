@@ -26,19 +26,19 @@
                 {
                     <li class="nav-item">
                         <a class="nav-link @ManageScriptPages.ScriptActionsNavClass(ViewContext)"
-                           asp-page="/Scripts/ScriptActions/ScriptActions"
-                           asp-route-scriptid="@scriptId">Actions</a>
+                           asp-page="/Scripts/ScriptActions/ScriptActionsIndex"
+                           asp-route-id="@scriptId">Actions</a>
                     </li>
                 }
-                <li class="nav-item">
-                    <a class="nav-link @ManageScriptPages.ScriptTagsNavClass(ViewContext)"
-                       asp-page="/Scripts/ScriptTags/ScriptTags"
-                       asp-route-scriptid="@scriptId">Tags</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link @ManageScriptPages.ScriptSchedulesNavClass(ViewContext)"
                        asp-page="/Scripts/ScriptSchedules/ScriptSchedules"
                        asp-route-scriptid="@scriptId">Schedules</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @ManageScriptPages.ScriptTagsNavClass(ViewContext)"
+                       asp-page="/Scripts/ScriptTags/ScriptTagsIndex"
+                       asp-route-id="@scriptId">Tags</a>
                 </li>
             </ul>
         </nav>

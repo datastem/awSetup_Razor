@@ -27,6 +27,7 @@ namespace awSetup_Razor.Models
 
         [Required]
         [StringLength(10)]
+        [DisplayFormat(DataFormatString = "{0:###-###-####}")]
         public string PrimaryPhone { get; set; }
         public bool IsMember { get; set; }
 

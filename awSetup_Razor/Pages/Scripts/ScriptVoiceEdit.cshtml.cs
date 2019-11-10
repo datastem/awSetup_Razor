@@ -87,7 +87,7 @@ namespace awSetup_Razor.Pages.Scripts
 
         public async Task<PartialViewResult> OnGetScriptActionsEdit(int? id)
         {
-            ActionEdit action = new ActionEdit
+            ScriptActionsEdit action = new ScriptActionsEdit
             {
                 Scriptaction = await _context.ScriptActions.Where(s => s.ScriptActionId == id).FirstOrDefaultAsync()
             };
@@ -109,11 +109,11 @@ namespace awSetup_Razor.Pages.Scripts
             return new PartialViewResult
             {
                 ViewName = @".\Scripts\ScriptActionsEditModalPartial",
-                ViewData = new ViewDataDictionary<ActionEdit>(ViewData, action)
+                ViewData = new ViewDataDictionary<ScriptActionsEdit>(ViewData, action)
             };
         }
 
-        public async Task<IActionResult> OnPostScriptActionsEdit(ActionEdit action)
+        public async Task<IActionResult> OnPostScriptActionsEdit(ScriptActionsEdit action)
         {
             if (ModelState.IsValid)
             {
@@ -124,7 +124,7 @@ namespace awSetup_Razor.Pages.Scripts
             return new PartialViewResult
             {
                 ViewName = @".\Scripts\ScriptActionsEditModalPartial",
-                ViewData = new ViewDataDictionary<ActionEdit>(ViewData, action)
+                ViewData = new ViewDataDictionary<ScriptActionsEdit>(ViewData, action)
             };
         }
 

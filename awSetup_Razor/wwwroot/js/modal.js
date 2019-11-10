@@ -33,6 +33,7 @@
                 var notificationsPlaceholder = $('#notification');
                 var notificationsUrl = notificationsPlaceholder.data('url');
                 $.get(notificationsUrl).done(function (notifications) {
+                    var test = 1;
                     notificationsPlaceholder.html(notifications);
                 });
 

@@ -17,13 +17,16 @@ namespace awSetup_Razor.Models
 
         [Required]
         [StringLength(20)]
+        [Display(Name ="Contact Type")]
         public string ContactTypeCode { get; set; }
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Name")]
         public string ContactName { get; set; }
 
         [StringLength(100)]
+        [Display(Name="Address")]
         public string Address1 { get; set; }
 
         [StringLength(100)]
@@ -38,10 +41,14 @@ namespace awSetup_Razor.Models
         [StringLength(5)]
         public string Zip { get; set; }
 
-        [StringLength(10)]
+        [StringLength(12)]
         public string Phone { get; set; }
 
+        [StringLength(6)]
+        public string Extension { get; set; }
+
         [StringLength(100)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Column(TypeName = "datetime2(0)")]
