@@ -51,7 +51,10 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td><a asp-page="../MessageTypes/MessageTypeIndex" asp-route-customerid="@item.CustomerId"><i class="fas fa-scroll"></i></a></td>
+                <td>
+                    <a asp-page="../MessageTypes/MessageTypeIndex" asp-route-customerid="@item.CustomerId"><i class="fas fa-scroll"></i></a>
+                    <a class="btn far fa-edit" asp-page-handler="CustomerEdit" asp-route-id="@item.CustomerId"></a>
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CustomerName)
                 </td>
@@ -89,7 +92,6 @@
                     @Html.DisplayFor(modelItem => item.Active)
                 </td>
                 <td>
-                    <a class="btn far fa-edit" asp-page-handler="CustomerEdit" asp-route-id="@item.CustomerId"></a>
                     @*<a asp-page-handler="CreateFTPUser" asp-route-id="@item.CustomerId" title="Create FTP User Account"><i class="fas fa-server"></i></a>*@
                     <a class="btn far fa-trash-alt" data-toggle="ajax-modal" data-target="#update-customers" data-url="@Url.Page("CustomerIndex", "CustomerDelete", new {id =  item.CustomerId})"></a>
                 </td>

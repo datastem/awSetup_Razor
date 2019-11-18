@@ -6,9 +6,6 @@
     ViewData["ActivePage"] = ManageCustomerPages.CustomerEdit;
 }
 
-<br />
-<h4>Edit Customer</h4>
-<hr />
 <div class="row">
     <div class="col-md-8 offset-2">
         <form method="post">
@@ -92,7 +89,7 @@
 </div>
 
 <div>
-    <a asp-page="./CustomerIndex">Back to List</a>
+    <a asp-page="/Customers/CustomersIndex">Back to List</a>
 </div>
 
 @section Scripts {
