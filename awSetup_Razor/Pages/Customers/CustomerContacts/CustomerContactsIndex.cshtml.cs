@@ -28,6 +28,7 @@ namespace awSetup_Razor.Pages.Customers.CustomerContacts
         {
             CustomerContacts = await _context.CustomerContacts.Where(cc => cc.CustomerId == id).ToListAsync();
         }
+
         public async Task<PartialViewResult> OnGetTableRefreshAsync(int id)
         {
             CustomerContacts = await _context.CustomerContacts.Where(cp => cp.CustomerId == id).ToListAsync();

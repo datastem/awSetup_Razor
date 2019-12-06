@@ -137,8 +137,6 @@ namespace awSetup_Razor.Models
 
                 entity.Property(e => e.EmailAddress).IsUnicode(false);
 
-                entity.Property(e => e.FTPFolderPath).IsUnicode(false);
-
                 entity.Property(e => e.FTPPassword).IsUnicode(false);
 
                 entity.Property(e => e.FTPUserName).IsUnicode(false);

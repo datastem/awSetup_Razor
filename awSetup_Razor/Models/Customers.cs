@@ -33,9 +33,6 @@ namespace awSetup_Razor.Models
 
         public int TimeZoneOffset { get; set; }
 
-        [StringLength(255)]
-        public string FTPFolderPath { get; set; }
-
         [StringLength(24)]
         public string FTPUserName { get; set; }
 

@@ -80,15 +80,11 @@ namespace awSetup_Razor.Pages.Customers
                 switch (customer.Action)
                 {
                     case "Create":
-                        string ftppath = await _context.Settings.Where(s => s.ItemName == "FTPFolderPath").Select(s => s.ItemValue).SingleAsync();
-
-                        customer.FTPFolderPath = ftppath + customer.CustomerCode;
                         customer.FTPUserName = customer.CustomerCode;
                         customer.FTPPassword = GenerateRandomPassword();
 
                         //TODO: Create Twilio Subaccount
                         //TODO: Get SendGridAPIKey and populate, generate e-mail address
-                        
 
                         _context.Customers.Add(customer);
                         await _context.SaveChangesAsync();
